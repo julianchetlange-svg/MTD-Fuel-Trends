@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McCoy's Fuel Activity — April MTD</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1a0f;
+    --border: #1d3320;
+    --accent: #f0d500;
+    --accent2: #f5a800;
+    --green: #3ab54a;
+    --blue: #4ab8f5;
+    --text: #e8f0e9;
+    --muted: #5e7d62;
+    --card: #111f13;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Sans', sans-serif; overflow-x: hidden; }
+
+  /* ── Header ── */
+  .header { border-bottom: 1px solid var(--border); padding: 26px 48px; display: flex; align-items: flex-end; justify-content: space-between; background: linear-gradient(135deg, #091409 0%, #0f1f10 100%); }
+  .header-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); background: rgba(240,213,0,0.09); border: 1px solid rgba(240,213,0,0.22); padding: 4px 10px; margin-bottom: 6px; display: inline-block; }
+  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; letter-spacing: 0.04em; line-height: 1; color: #fff; }
+  .header h1 span { color: var(--accent); }
+  .header-meta { text-align: right; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); line-height: 1.8; }
+  .header-meta strong { display: block; font-size: 13px; color: var(--text); font-weight: 600; }
+
+  /* ── Source pills ── */
+  .source-pills { display: flex; gap: 8px; margin-top: 8px; justify-content: flex-end; }
+  .pill { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 2px; }
+  .pill-card   { background: rgba(240,213,0,0.12); border: 1px solid rgba(240,213,0,0.3); color: var(--accent); }
+  .pill-onsite { background: rgba(74,184,245,0.12); border: 1px solid rgba(74,184,245,0.3); color: var(--blue); }
+
+  /* ── KPI Strip ── */
+  .kpi-strip { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--border); }
+  .kpi { padding: 22px 26px; border-right: 1px solid var(--border); position: relative; opacity: 0; transform: translateY(14px); animation: fadeUp 0.5s ease forwards; }
+  .kpi:last-child { border-right: none; }
+  .kpi:nth-child(1){animation-delay:.08s} .kpi:nth-child(2){animation-delay:.16s} .kpi:nth-child(3){animation-delay:.24s} .kpi:nth-child(4){animation-delay:.32s} .kpi:nth-child(5){animation-delay:.4s}
+  .kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; }
+  .kpi.cy::before  { background: var(--accent); }
+  .kpi.cg::before  { background: var(--green); }
+  .kpi.cb::before  { background: var(--blue); }
+  .kpi.ca::before  { background: var(--accent2); }
+  .kpi-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .kpi-value { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 0.02em; line-height: 1; color: #fff; }
+  .kpi-sub   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 4px; }
+  .kpi-breakdown { display: flex; gap: 10px; margin-top: 6px; }
+  .kpi-b-item { font-family: 'IBM Plex Mono', monospace; font-size: 9px; }
+
+  /* ── Section labels ── */
+  .sec-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; padding: 7px 48px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .sec-label.sy { color: var(--accent);  background: rgba(240,213,0,0.04); }
+  .sec-label.sg { color: var(--green);   background: rgba(58,181,74,0.04); }
+  .sec-label.sb { color: var(--blue);    background: rgba(74,184,245,0.04); }
+  .sec-label.sw { color: var(--text);    background: rgba(255,255,255,0.02); }
+
+  /* ── Panel title ── */
+  .pt { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .pt::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  /* ── Main chart area ── */
+  .main { display: grid; grid-template-columns: 1fr 350px; }
+  .chart-panel { border-right: 1px solid var(--border); padding: 30px 40px; }
+
+  /* Stacked bar chart */
+  .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 200px; margin-bottom: 8px; }
+  .bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 5px; }
+  .bar-wrap  { width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 2px; flex: 1; }
+  .bar { border-radius: 2px 2px 0 0; transition: opacity 0.2s; cursor: default; }
+  .bar:hover { opacity: 0.75; }
+
+  /* Two bar columns per day: left=card, right=onsite */
+  .bar-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; width: 42%; height: 100%; gap: 1px; }
+  .bar-card   { background: linear-gradient(180deg, var(--accent) 0%, rgba(240,213,0,0.4) 100%); width: 100%; border-radius: 2px 2px 0 0; }
+  .bar-onsite { background: linear-gradient(180deg, var(--blue)   0%, rgba(74,184,245,0.4) 100%); width: 100%; border-radius: 2px 2px 0 0; }
+  .bar-date { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); text-align: center; }
+
+  .chart-legend { display: flex; gap: 18px; margin-top: 4px; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+  .leg-dot  { width: 8px; height: 8px; border-radius: 1px; }
+
+  /* CPG line */
+  .line-wrap { margin-top: 26px; }
+  .line-svg  { width: 100%; height: 90px; overflow: visible; }
+
+  /* ── Sidebar table ── */
+  .sidebar { padding: 30px 26px; }
+  .dt { width: 100%; border-collapse: collapse; }
+  .dt th { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 0 0 9px 8px; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .dt th:first-child { text-align: left; padding-left: 0; }
+  .dt td { padding: 7px 0 7px 8px; text-align: right; border-bottom: 1px solid rgba(29,51,32,0.5); font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text); }
+  .dt td:first-child { text-align: left; padding-left: 0; color: var(--muted); font-size: 10px; }
+  .dt tr:hover td { background: rgba(255,255,255,0.02); }
+  .dt .card-val  { color: var(--accent); }
+  .dt .site-val  { color: var(--blue); }
+  .dt .tot-val   { color: var(--text); font-weight: 600; }
+  .dt .cpg-hi    { color: var(--accent2); font-weight: 600; }
+  .dt .cpg-lo    { color: var(--green);   font-weight: 600; }
+  .we td { opacity: 0.45; }
+
+  /* ── Split summary ── */
+  .split-grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .split-panel { padding: 28px 40px; border-right: 1px solid var(--border); }
+  .split-panel:last-child { border-right: none; padding-right: 48px; }
+  .stat-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 1px solid rgba(29,51,32,0.45); }
+  .stat-row:last-child { border-bottom: none; }
+  .sl { font-size: 12px; color: var(--muted); font-weight: 300; }
+  .sv { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; }
+  .sy { color: var(--accent); }  .sg { color: var(--green); }  .sb { color: var(--blue); }  .sa { color: var(--accent2); }  .sw { color: var(--text); }
+
+  /* ── Combined totals bar ── */
+  .combined-bar { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: rgba(240,213,0,0.03); }
+  .cb-cell { padding: 16px 24px; border-right: 1px solid var(--border); }
+  .cb-cell:last-child { border-right: none; }
+  .cb-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .cb-val   { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.03em; line-height: 1.1; }
+  .cb-sub   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 2px; }
+  .cb-stack { display: flex; gap: 0; height: 4px; border-radius: 2px; overflow: hidden; margin-top: 6px; }
+  .cb-stack-card   { background: var(--accent); }
+  .cb-stack-onsite { background: var(--blue); }
+
+  /* ── CPG trend bars ── */
+  .trend-row   { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .trend-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); width: 40px; text-align: right; flex-shrink: 0; }
+  .trend-track { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .trend-fill  { height: 100%; border-radius: 3px; }
+  .trend-val   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); width: 48px; flex-shrink: 0; }
+
+  /* ── Footer ── */
+  .footer { border-top: 1px solid var(--border); padding: 13px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-left  { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+  .footer-right { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+  .footer-right span { color: var(--text); }
+
+  /* Tooltip */
+  .tooltip { position: absolute; background: #0b180d; border: 1px solid var(--border); padding: 8px 12px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text); pointer-events: none; white-space: nowrap; z-index: 100; display: none; border-radius: 2px; line-height: 1.7; }
+
+  @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+<div class="tooltip" id="tt"></div>
+
+<!-- ── Header ── -->
+<header class="header">
+  <div>
+    <div class="header-tag">⛽ McCoy's Fleet Fuel Operations</div>
+    <h1>APRIL <span>MTD</span></h1>
+  </div>
+  <div class="header-meta">
+    <strong>Apr 1 – Apr 11, 2026</strong>
+    11 days of activity · Report: April 14, 2026
+    <div class="source-pills">
+      <span class="pill pill-card">⬛ Fuel Card Transactions</span>
+      <span class="pill pill-onsite">⬛ On-Site Dispensing</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── KPI Strip ── -->
+<div class="kpi-strip">
+  <div class="kpi cy">
+    <div class="kpi-label">Combined Total Spend</div>
+    <div class="kpi-value">$337,864</div>
+    <div class="kpi-breakdown">
+      <span class="kpi-b-item" style="color:var(--accent)">Card: $230,801</span>
+      <span class="kpi-b-item" style="color:var(--muted)">·</span>
+      <span class="kpi-b-item" style="color:var(--blue)">On-Site: $107,063</span>
+    </div>
+  </div>
+  <div class="kpi cg">
+    <div class="kpi-label">Combined Gallons</div>
+    <div class="kpi-value">67,341</div>
+    <div class="kpi-breakdown">
+      <span class="kpi-b-item" style="color:var(--accent)">Card: 46,002</span>
+      <span class="kpi-b-item" style="color:var(--muted)">·</span>
+      <span class="kpi-b-item" style="color:var(--blue)">On-Site: 21,339</span>
+    </div>
+  </div>
+  <div class="kpi ca">
+    <div class="kpi-label">Blended Avg CPG</div>
+    <div class="kpi-value">$5.02</div>
+    <div class="kpi-sub">combined · all sources</div>
+  </div>
+  <div class="kpi cy">
+    <div class="kpi-label">Card Transactions</div>
+    <div class="kpi-value">1,375</div>
+    <div class="kpi-sub">fuel card · Apr 1–11</div>
+  </div>
+  <div class="kpi cb">
+    <div class="kpi-label">On-Site Share</div>
+    <div class="kpi-value">31.7%</div>
+    <div class="kpi-sub">of combined volume</div>
+  </div>
+</div>
+
+<!-- ── Daily Charts ── -->
+<div class="sec-label sy">Daily Activity — Apr 1–11 · Fuel Card vs On-Site</div>
+
+<div class="main">
+  <div class="chart-panel">
+    <div class="pt">Daily Spend by Source</div>
+    <div class="bar-chart" id="barChart"></div>
+    <div class="chart-legend">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--accent)"></div>Fuel Card Spend</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div>On-Site Est. Spend</div>
+    </div>
+    <div class="line-wrap">
+      <div class="pt">Blended Cost Per Gallon — Daily Trend</div>
+      <svg class="line-svg" id="cpgChart" viewBox="0 0 680 90"></svg>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="pt">Daily Breakdown</div>
+    <table class="dt">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th style="color:var(--accent)">Card $</th>
+          <th style="color:var(--blue)">Site $</th>
+          <th>Total</th>
+          <th>CPG</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── Source Split Summary ── -->
+<div class="sec-label sy">Period Summary — Fuel Card vs On-Site</div>
+
+<div class="split-grid">
+  <div class="split-panel">
+    <div class="pt" style="color:var(--accent)">Fuel Card</div>
+    <div class="stat-row"><span class="sl">Total Spend</span><span class="sv sy">$230,801</span></div>
+    <div class="stat-row"><span class="sl">Total Gallons</span><span class="sv sy">46,002</span></div>
+    <div class="stat-row"><span class="sl">Total Transactions</span><span class="sv sw">1,375</span></div>
+    <div class="stat-row"><span class="sl">Avg Spend / Day</span><span class="sv sw">$20,982</span></div>
+    <div class="stat-row"><span class="sl">Avg Gallons / Day</span><span class="sv sw">4,182</span></div>
+    <div class="stat-row"><span class="sl">Avg Transactions / Day</span><span class="sv sw">125</span></div>
+    <div class="stat-row"><span class="sl">Avg CPG</span><span class="sv sy">$5.02</span></div>
+    <div class="stat-row"><span class="sl">Peak Day Spend</span><span class="sv sy">Apr 8 — $30,009</span></div>
+    <div class="stat-row"><span class="sl">Peak Day Gallons</span><span class="sv sw">Apr 2 — 5,894</span></div>
+  </div>
+  <div class="split-panel">
+    <div class="pt" style="color:var(--blue)">On-Site Dispensing</div>
+    <div class="stat-row"><span class="sl">Est. Total Spend</span><span class="sv sb">$107,063</span></div>
+    <div class="stat-row"><span class="sl">Allocated Gallons</span><span class="sv sb">21,339</span></div>
+    <div class="stat-row"><span class="sl">Sites Active</span><span class="sv sw">3 sites</span></div>
+    <div class="stat-row"><span class="sl">Avg Est. Spend / Day</span><span class="sv sw">$9,733</span></div>
+    <div class="stat-row"><span class="sl">Avg Gallons / Day</span><span class="sv sw">1,940</span></div>
+    <div class="stat-row"><span class="sl">Mc Reload</span><span class="sv sb">16,376 gal · $82,862</span></div>
+    <div class="stat-row"><span class="sl">Midland Distribution</span><span class="sv sb">2,986 gal · $15,111</span></div>
+    <div class="stat-row"><span class="sl">Dayton Distribution</span><span class="sv sb">1,977 gal · $10,004</span></div>
+    <div class="stat-row"><span class="sl">Blended CPG (all sites)</span><span class="sv sb">$5.02</span></div>
+  </div>
+</div>
+
+<!-- ── Combined Totals Bar ── -->
+<div class="combined-bar">
+  <div class="cb-cell">
+    <div class="cb-label">Combined Total Spend</div>
+    <div class="cb-val" style="color:var(--accent)">$337,864</div>
+    <div class="cb-stack" id="spendStack"></div>
+    <div class="cb-sub">Card $230,801 · On-Site $107,063</div>
+  </div>
+  <div class="cb-cell">
+    <div class="cb-label">Combined Total Gallons</div>
+    <div class="cb-val" style="color:var(--green)">67,341</div>
+    <div class="cb-stack" id="galStack"></div>
+    <div class="cb-sub">Card 46,002 · On-Site 21,339</div>
+  </div>
+  <div class="cb-cell">
+    <div class="cb-label">Blended Avg CPG</div>
+    <div class="cb-val" style="color:var(--accent2)">$5.017</div>
+    <div class="cb-sub">weighted · all sources</div>
+  </div>
+  <div class="cb-cell">
+    <div class="cb-label">CPG by Day</div>
+    <div id="cpgBars"></div>
+  </div>
+</div>
+
+<!-- ── Footer ── -->
+<footer class="footer">
+  <div class="footer-left">McCOY'S FUEL ACTIVITY REPORT · APRIL 2026 · MTD · CARD + ON-SITE</div>
+  <div class="footer-right">
+    Combined Gals: <span>67,341</span>
+    &nbsp;·&nbsp; Combined Spend: <span>$337,864</span>
+    &nbsp;·&nbsp; Blended CPG: <span>$5.017</span>
+    &nbsp;·&nbsp; Card Txns: <span>1,375</span>
+    &nbsp;·&nbsp; On-Site Share: <span>31.7%</span>
+  </div>
+</footer>
+
+<script>
+// ── Data ──
+const data = [
+  { date:'04/01', fd:'Apr 1',  cardGal:5574.263, cardSpend:27216.76, siteGal:2585.77, siteSpend:12625.23, cpg:4.883, we:false },
+  { date:'04/02', fd:'Apr 2',  cardGal:5893.959, cardSpend:29205.17, siteGal:2734.07, siteSpend:13547.61, cpg:4.955, we:false },
+  { date:'04/03', fd:'Apr 3',  cardGal:4487.476, cardSpend:22035.23, siteGal:2081.64, siteSpend:10221.64, cpg:4.910, we:false },
+  { date:'04/04', fd:'Apr 4',  cardGal:1156.370, cardSpend:5954.07,  siteGal:536.41,  siteSpend:2761.96,  cpg:5.149, we:true  },
+  { date:'04/05', fd:'Apr 5',  cardGal:29.452,   cardSpend:156.07,   siteGal:13.66,   siteSpend:72.40,    cpg:5.299, we:true  },
+  { date:'04/06', fd:'Apr 6',  cardGal:5809.795, cardSpend:29038.85, siteGal:2695.03, siteSpend:13470.46, cpg:4.998, we:false },
+  { date:'04/07', fd:'Apr 7',  cardGal:4978.163, cardSpend:25013.05, siteGal:2309.26, siteSpend:11602.98, cpg:5.025, we:false },
+  { date:'04/08', fd:'Apr 8',  cardGal:5821.029, cardSpend:30009.22, siteGal:2700.24, siteSpend:13920.59, cpg:5.155, we:false },
+  { date:'04/09', fd:'Apr 9',  cardGal:5455.916, cardSpend:27735.05, siteGal:2530.87, siteSpend:12865.65, cpg:5.083, we:false },
+  { date:'04/10', fd:'Apr 10', cardGal:4831.174, cardSpend:24429.58, siteGal:2241.07, siteSpend:11332.32, cpg:5.057, we:false },
+  { date:'04/11', fd:'Apr 11', cardGal:1964.467, cardSpend:10007.66, siteGal:911.27,  siteSpend:4642.32,  cpg:5.094, we:true  },
+];
+data.forEach(d => {
+  d.totalSpend = d.cardSpend + d.siteSpend;
+  d.totalGal   = d.cardGal  + d.siteGal;
+});
+
+const tt = document.getElementById('tt');
+const fmt  = (n,dec=0) => n.toLocaleString(undefined,{minimumFractionDigits:dec,maximumFractionDigits:dec});
+const fmtD = (n,dec=0) => '$'+fmt(n,dec);
+
+// ── Bar Chart ──
+const maxTotal = Math.max(...data.map(d => d.totalSpend));
+const chart = document.getElementById('barChart');
+
+data.forEach(d => {
+  const cardH = (d.cardSpend / maxTotal * 100).toFixed(1);
+  const siteH = (d.siteSpend / maxTotal * 100).toFixed(1);
+  const g = document.createElement('div');
+  g.className = 'bar-group';
+  g.innerHTML = `
+    <div class="bar-wrap">
+      <div class="bar-col" style="height:100%">
+        <div class="bar bar-card" style="height:${cardH}%"
+          data-tip="<strong>${d.fd} — Fuel Card</strong><br>Spend: ${fmtD(d.cardSpend)}<br>Gallons: ${fmt(d.cardGal)} gal<br>CPG: $${d.cpg.toFixed(3)}"></div>
+      </div>
+      <div class="bar-col" style="height:100%">
+        <div class="bar bar-onsite" style="height:${siteH}%"
+          data-tip="<strong>${d.fd} — On-Site</strong><br>Est. Spend: ${fmtD(d.siteSpend)}<br>Gallons: ${fmt(d.siteGal)} gal<br>CPG: $${d.cpg.toFixed(3)}"></div>
+      </div>
+    </div>
+    <div class="bar-date">${d.date}</div>`;
+  g.querySelectorAll('.bar').forEach(b => {
+    b.addEventListener('mousemove', e => {
+      tt.innerHTML = b.dataset.tip;
+      tt.style.display = 'block';
+      tt.style.left = (e.pageX+14)+'px';
+      tt.style.top  = (e.pageY-12)+'px';
+    });
+    b.addEventListener('mouseleave', () => { tt.style.display='none'; });
+  });
+  chart.appendChild(g);
+});
+
+// ── CPG Line Chart ──
+const svg    = document.getElementById('cpgChart');
+const minCpg = Math.min(...data.map(d => d.cpg));
+const maxCpg = Math.max(...data.map(d => d.cpg));
+const padX=30, padY=12, svgW=680, svgH=90;
+const xStep  = (svgW-padX*2)/(data.length-1);
+const yRange = svgH-padY*2;
+const cx = i => padX + i*xStep;
+const cy = v => padY + yRange - ((v-minCpg)/(maxCpg-minCpg))*yRange;
+
+[minCpg,(minCpg+maxCpg)/2,maxCpg].forEach(v => {
+  const y=cy(v);
+  const l=document.createElementNS('http://www.w3.org/2000/svg','line');
+  l.setAttribute('x1',padX);l.setAttribute('x2',svgW-padX);l.setAttribute('y1',y);l.setAttribute('y2',y);
+  l.setAttribute('stroke','#1d3320');l.setAttribute('stroke-width','1');svg.appendChild(l);
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',2);t.setAttribute('y',y+3);t.setAttribute('fill','#4b5563');
+  t.setAttribute('font-family','IBM Plex Mono');t.setAttribute('font-size','8');
+  t.textContent='$'+v.toFixed(2);svg.appendChild(t);
+});
+
+const area=document.createElementNS('http://www.w3.org/2000/svg','path');
+area.setAttribute('d',`M ${cx(0)},${svgH} ${data.map((d,i)=>`L ${cx(i)},${cy(d.cpg)}`).join(' ')} L ${cx(data.length-1)},${svgH} Z`);
+area.setAttribute('fill','rgba(240,213,0,0.06)');svg.appendChild(area);
+
+const lp=document.createElementNS('http://www.w3.org/2000/svg','path');
+lp.setAttribute('d',`M ${data.map((d,i)=>`${cx(i)},${cy(d.cpg)}`).join(' L ')}`);
+lp.setAttribute('fill','none');lp.setAttribute('stroke','var(--accent)');lp.setAttribute('stroke-width','1.5');
+svg.appendChild(lp);
+const pl=lp.getTotalLength();
+lp.style.strokeDasharray=pl;lp.style.strokeDashoffset=pl;
+requestAnimationFrame(()=>{ lp.style.transition='stroke-dashoffset 1.5s ease 0.5s'; lp.style.strokeDashoffset='0'; });
+
+data.forEach((d,i)=>{
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',cx(i));c.setAttribute('cy',cy(d.cpg));c.setAttribute('r','3');
+  c.setAttribute('fill','#0d1a0f');
+  c.setAttribute('stroke',d.cpg>=5.1?'var(--accent2)':d.cpg<=4.96?'var(--green)':'var(--accent)');
+  c.setAttribute('stroke-width','1.5');svg.appendChild(c);
+});
+
+// ── Daily table ──
+const tbody=document.getElementById('tableBody');
+data.forEach(d=>{
+  const cpgCls=d.cpg>=5.1?'cpg-hi':d.cpg<=4.96?'cpg-lo':'';
+  const tr=document.createElement('tr');
+  if(d.we) tr.className='we';
+  tr.innerHTML=`
+    <td>${d.fd}</td>
+    <td class="card-val">${fmtD(d.cardSpend)}</td>
+    <td class="site-val">${fmtD(d.siteSpend)}</td>
+    <td class="tot-val">${fmtD(d.totalSpend)}</td>
+    <td class="${cpgCls}">$${d.cpg.toFixed(3)}</td>`;
+  tbody.appendChild(tr);
+});
+
+// ── Combined stacked bars ──
+const cardSpendPct  = (230801/337864*100).toFixed(1);
+const siteSpendPct  = (107063/337864*100).toFixed(1);
+const cardGalPct    = (46002 /67341 *100).toFixed(1);
+const siteGalPct    = (21339 /67341 *100).toFixed(1);
+document.getElementById('spendStack').innerHTML=`<div class="cb-stack-card" style="width:${cardSpendPct}%"></div><div class="cb-stack-onsite" style="width:${siteSpendPct}%"></div>`;
+document.getElementById('galStack').innerHTML=`<div class="cb-stack-card" style="width:${cardGalPct}%"></div><div class="cb-stack-onsite" style="width:${siteGalPct}%"></div>`;
+
+// ── CPG trend bars ──
+const cpgMin=Math.min(...data.map(d=>d.cpg)), cpgMax=Math.max(...data.map(d=>d.cpg));
+const cpgWrap=document.getElementById('cpgBars');
+data.forEach(d=>{
+  const pct=((d.cpg-cpgMin)/(cpgMax-cpgMin)*100).toFixed(1);
+  const col=d.cpg>=5.1?'var(--accent2)':d.cpg<=4.96?'var(--green)':'var(--accent)';
+  cpgWrap.innerHTML+=`<div class="trend-row"><div class="trend-label">${d.date}</div><div class="trend-track"><div class="trend-fill" style="width:${pct}%;background:${col}"></div></div><div class="trend-val">$${d.cpg.toFixed(3)}</div></div>`;
+});
+</script>
+</body>
+</html>
