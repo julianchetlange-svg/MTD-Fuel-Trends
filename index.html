@@ -84,7 +84,7 @@
 
   /* CPG line */
   .line-wrap { margin-top: 26px; }
-  .line-svg  { width: 100%; height: 90px; overflow: visible; }
+  .line-svg  { width: 100%; height: 160px; overflow: visible; }
 
   /* ── Sidebar table ── */
   .sidebar { padding: 30px 26px; }
@@ -218,8 +218,8 @@
     <h1 id="pageTitle">APRIL <span>MTD</span></h1>
   </div>
   <div class="header-meta" id="headerMeta">
-    <strong>Apr 1 – Apr 17, 2026</strong>
-    16 days of activity · Report: April 21, 2026
+    <strong>Apr 1 – Apr 24, 2026</strong>
+    22 days of activity · Report: April 28, 2026
     <div class="source-pills">
       <span class="pill pill-card">⬛ Fuel Card Transactions</span>
       <span class="pill pill-onsite">⬛ On-Site Dispensing</span>
@@ -239,20 +239,20 @@
 <div class="kpi-strip">
   <div class="kpi cy">
     <div class="kpi-label">Combined Total Spend</div>
-    <div class="kpi-value">$534,459</div>
+    <div class="kpi-value">$727,295</div>
     <div class="kpi-breakdown">
-      <span class="kpi-b-item" style="color:var(--accent)">Card: $369,369</span>
+      <span class="kpi-b-item" style="color:var(--accent)">Card: $501,695</span>
       <span class="kpi-b-item" style="color:var(--muted)">·</span>
-      <span class="kpi-b-item" style="color:var(--blue)">On-Site: $165,090</span>
+      <span class="kpi-b-item" style="color:var(--blue)">On-Site: $225,600</span>
     </div>
   </div>
   <div class="kpi cg">
     <div class="kpi-label">Combined Gallons</div>
-    <div class="kpi-value">106,566</div>
+    <div class="kpi-value">146,459</div>
     <div class="kpi-breakdown">
-      <span class="kpi-b-item" style="color:var(--accent)">Card: 73,426</span>
+      <span class="kpi-b-item" style="color:var(--accent)">Card: 100,800</span>
       <span class="kpi-b-item" style="color:var(--muted)">·</span>
-      <span class="kpi-b-item" style="color:var(--blue)">On-Site: 33,141</span>
+      <span class="kpi-b-item" style="color:var(--blue)">On-Site: 45,658</span>
     </div>
   </div>
   <div class="kpi ca">
@@ -262,18 +262,18 @@
   </div>
   <div class="kpi cy">
     <div class="kpi-label">Card Transactions</div>
-    <div class="kpi-value">2,205</div>
-    <div class="kpi-sub">fuel card · Apr 1–17</div>
+    <div class="kpi-value">3,088</div>
+    <div class="kpi-sub">fuel card · Apr 1–24</div>
   </div>
   <div class="kpi cb">
     <div class="kpi-label">On-Site Share</div>
-    <div class="kpi-value">31.1%</div>
+    <div class="kpi-value">31.2%</div>
     <div class="kpi-sub">of combined volume</div>
   </div>
 </div>
 
 <!-- ── Daily Charts ── -->
-<div class="sec-label sy">Daily Activity — Apr 1–17 · Fuel Card vs On-Site</div>
+<div class="sec-label sy">Daily Activity — Apr 1–24 · Fuel Card vs On-Site</div>
 
 <div class="main">
   <div class="chart-panel">
@@ -285,7 +285,7 @@
     </div>
     <div class="line-wrap">
       <div class="pt">Blended Cost Per Gallon — Daily Trend</div>
-      <svg class="line-svg" id="cpgChart" viewBox="0 0 680 90"></svg>
+      <svg class="line-svg" id="cpgChart" viewBox="0 0 680 160"></svg>
     </div>
   </div>
 
@@ -312,23 +312,23 @@
 <div class="split-grid">
   <div class="split-panel">
     <div class="pt" style="color:var(--accent)">Fuel Card</div>
-    <div class="stat-row"><span class="sl">Total Spend</span><span class="sv sy">$369,369</span></div>
-    <div class="stat-row"><span class="sl">Total Gallons</span><span class="sv sy">73,426</span></div>
-    <div class="stat-row"><span class="sl">Total Transactions</span><span class="sv sw">2,205</span></div>
-    <div class="stat-row"><span class="sl">Avg Spend / Day</span><span class="sv sw">$23,086</span></div>
-    <div class="stat-row"><span class="sl">Avg Gallons / Day</span><span class="sv sw">4,589</span></div>
-    <div class="stat-row"><span class="sl">Avg Transactions / Day</span><span class="sv sw">138</span></div>
-    <div class="stat-row"><span class="sl">Avg CPG</span><span class="sv sy">$5.02</span></div>
+    <div class="stat-row"><span class="sl">Total Spend</span><span class="sv sy">$501,695</span></div>
+    <div class="stat-row"><span class="sl">Total Gallons</span><span class="sv sy">100,800</span></div>
+    <div class="stat-row"><span class="sl">Total Transactions</span><span class="sv sw">3,088</span></div>
+    <div class="stat-row"><span class="sl">Avg Spend / Day</span><span class="sv sw">$22,804</span></div>
+    <div class="stat-row"><span class="sl">Avg Gallons / Day</span><span class="sv sw">4,582</span></div>
+    <div class="stat-row"><span class="sl">Avg Transactions / Day</span><span class="sv sw">140</span></div>
+    <div class="stat-row"><span class="sl">Avg CPG</span><span class="sv sy">$4.98</span></div>
     <div class="stat-row"><span class="sl">Peak Day Spend</span><span class="sv sy">Apr 16 — $29,641</span></div>
     <div class="stat-row"><span class="sl">Peak Day Gallons</span><span class="sv sw">Apr 16 — 5,953</span></div>
   </div>
   <div class="split-panel">
     <div class="pt" style="color:var(--blue)">On-Site Dispensing</div>
-    <div class="stat-row"><span class="sl">Est. Total Spend</span><span class="sv sb">$165,090</span></div>
-    <div class="stat-row"><span class="sl">Allocated Gallons</span><span class="sv sb">33,141</span></div>
+    <div class="stat-row"><span class="sl">Est. Total Spend</span><span class="sv sb">$225,600</span></div>
+    <div class="stat-row"><span class="sl">Allocated Gallons</span><span class="sv sb">45,658</span></div>
     <div class="stat-row"><span class="sl">Sites Active</span><span class="sv sw">3 sites</span></div>
-    <div class="stat-row"><span class="sl">Avg Est. Spend / Day</span><span class="sv sw">$10,318</span></div>
-    <div class="stat-row"><span class="sl">Avg Gallons / Day</span><span class="sv sw">2,071</span></div>
+    <div class="stat-row"><span class="sl">Avg Est. Spend / Day</span><span class="sv sw">$10,255</span></div>
+    <div class="stat-row"><span class="sl">Avg Gallons / Day</span><span class="sv sw">2,075</span></div>
     <div class="stat-row"><span class="sl">Mc Reload</span><span class="sv sb">16,376 gal · $82,862</span></div>
     <div class="stat-row"><span class="sl">Midland Distribution</span><span class="sv sb">2,986 gal · $15,111</span></div>
     <div class="stat-row"><span class="sl">Dayton Distribution</span><span class="sv sb">1,977 gal · $10,004</span></div>
@@ -340,19 +340,19 @@
 <div class="combined-bar">
   <div class="cb-cell">
     <div class="cb-label">Combined Total Spend</div>
-    <div class="cb-val" style="color:var(--accent)">$534,459</div>
+    <div class="cb-val" style="color:var(--accent)">$727,295</div>
     <div class="cb-stack" id="spendStack"></div>
-    <div class="cb-sub">Card $369,369 · On-Site $165,090</div>
+    <div class="cb-sub">Card $501,695 · On-Site $225,600</div>
   </div>
   <div class="cb-cell">
     <div class="cb-label">Combined Total Gallons</div>
-    <div class="cb-val" style="color:var(--green)">106,566</div>
+    <div class="cb-val" style="color:var(--green)">146,459</div>
     <div class="cb-stack" id="galStack"></div>
-    <div class="cb-sub">Card 73,426 · On-Site 33,141</div>
+    <div class="cb-sub">Card 100,800 · On-Site 45,658</div>
   </div>
   <div class="cb-cell">
     <div class="cb-label">Blended Avg CPG</div>
-    <div class="cb-val" style="color:var(--accent2)">$5.015</div>
+    <div class="cb-val" style="color:var(--accent2)">$4.966</div>
     <div class="cb-sub">weighted · all sources</div>
   </div>
   <div class="cb-cell">
@@ -365,11 +365,11 @@
 <footer class="footer">
   <div class="footer-left">McCOY'S FUEL ACTIVITY REPORT · APRIL 2026 · MTD · CARD + ON-SITE</div>
   <div class="footer-right">
-    Combined Gals: <span>106,566</span>
-    &nbsp;·&nbsp; Combined Spend: <span>$534,459</span>
-    &nbsp;·&nbsp; Blended CPG: <span>$5.015</span>
-    &nbsp;·&nbsp; Card Txns: <span>2,205</span>
-    &nbsp;·&nbsp; On-Site Share: <span>31.1%</span>
+    Combined Gals: <span>146,459</span>
+    &nbsp;·&nbsp; Combined Spend: <span>$727,295</span>
+    &nbsp;·&nbsp; Blended CPG: <span>$4.966</span>
+    &nbsp;·&nbsp; Card Txns: <span>3,088</span>
+    &nbsp;·&nbsp; On-Site Share: <span>31.2%</span>
   </div>
 </footer>
 
@@ -391,7 +391,13 @@ const data = [
   { date:'04/14', fd:'Apr 14', cardGal:5495.451, cardSpend:27824.86, siteGal:2364.89, siteSpend:11660.21, cpg:4.931, we:false },
   { date:'04/15', fd:'Apr 15', cardGal:5620.542, cardSpend:28595.04, siteGal:2418.72, siteSpend:12028.70, cpg:4.973, we:false },
   { date:'04/16', fd:'Apr 16', cardGal:5952.929, cardSpend:29640.94, siteGal:2561.76, siteSpend:12402.71, cpg:4.841, we:false },
-  { date:'04/17', fd:'Apr 17', cardGal:4960.704, cardSpend:24693.01, siteGal:2134.77, siteSpend:10324.64, cpg:4.836, we:false },
+  { date:'04/17', fd:'Apr 17', cardGal:4960.704, cardSpend:24693.01, siteGal:2134.77,  siteSpend:10324.64, cpg:4.836, we:false },
+  { date:'04/18', fd:'Apr 18', cardGal:1401.461, cardSpend:6913.31,  siteGal:640.851,  siteSpend:3161.28,  cpg:4.933, we:true  },
+  { date:'04/20', fd:'Apr 20', cardGal:5407.710, cardSpend:26675.06, siteGal:2472.804, siteSpend:12197.80, cpg:4.933, we:false },
+  { date:'04/21', fd:'Apr 21', cardGal:5269.533, cardSpend:25164.30, siteGal:2409.619, siteSpend:11506.97, cpg:4.775, we:false },
+  { date:'04/22', fd:'Apr 22', cardGal:4767.916, cardSpend:22965.96, siteGal:2180.243, siteSpend:10501.73, cpg:4.817, we:false },
+  { date:'04/23', fd:'Apr 23', cardGal:5322.415, cardSpend:25582.46, siteGal:2433.801, siteSpend:11698.19, cpg:4.807, we:false },
+  { date:'04/24', fd:'Apr 24', cardGal:5205.597, cardSpend:25025.25, siteGal:2380.383, siteSpend:11443.39, cpg:4.807, we:false },
 ];
 data.forEach(d => {
   d.totalSpend = d.cardSpend + d.siteSpend;
@@ -437,9 +443,9 @@ data.forEach(d => {
 
 // ── CPG Line Chart ──
 const svg    = document.getElementById('cpgChart');
-const minCpg = Math.min(...data.map(d => d.cpg));
-const maxCpg = Math.max(...data.map(d => d.cpg));
-const padX=30, padY=12, svgW=680, svgH=90;
+const minCpg = Math.min(...data.map(d => d.cpg)) - 0.05;
+const maxCpg = Math.max(...data.map(d => d.cpg)) + 0.05;
+const padX=30, padY=16, svgW=680, svgH=160;
 const xStep  = (svgW-padX*2)/(data.length-1);
 const yRange = svgH-padY*2;
 const cx = i => padX + i*xStep;
@@ -492,10 +498,10 @@ data.forEach(d=>{
 });
 
 // ── Combined stacked bars ──
-const cardSpendPct  = (369369/534459*100).toFixed(1);
-const siteSpendPct  = (165090/534459*100).toFixed(1);
-const cardGalPct    = (73426 /106566*100).toFixed(1);
-const siteGalPct    = (33141 /106566*100).toFixed(1);
+const cardSpendPct  = (501695/727295*100).toFixed(1);
+const siteSpendPct  = (225600/727295*100).toFixed(1);
+const cardGalPct    = (100800/146459*100).toFixed(1);
+const siteGalPct    = (45658 /146459*100).toFixed(1);
 document.getElementById('spendStack').innerHTML=`<div class="cb-stack-card" style="width:${cardSpendPct}%"></div><div class="cb-stack-onsite" style="width:${siteSpendPct}%"></div>`;
 document.getElementById('galStack').innerHTML=`<div class="cb-stack-card" style="width:${cardGalPct}%"></div><div class="cb-stack-onsite" style="width:${siteGalPct}%"></div>`;
 
@@ -513,23 +519,23 @@ const fcData = [
   { m:'Jan', rate:3.42, blended:569838.70, original:569838.70, incr:0,          src:'orig', actual:491063.16 },
   { m:'Feb', rate:3.38, blended:563430.41, original:563430.41, incr:0,          src:'orig', actual:548284.44 },
   { m:'Mar', rate:4.10, blended:777598.34, original:629664.99, incr:147933.35,  src:'low',  actual:842278.17 },
-  { m:'Apr', rate:5.10, blended:961702.79, original:616621.20, incr:345081.59,  src:'high', actual:null, projected:927689, projDays:16, projTotal:30 },
-  { m:'May', rate:5.40, blended:977997.48, original:583176.28, incr:394821.20,  src:'high', actual:null, projected:null },
-  { m:'Jun', rate:5.50, blended:931927.49, original:538823.53, incr:393103.96,  src:'high', actual:null, projected:null },
-  { m:'Jul', rate:5.30, blended:982065.29, original:583680.31, incr:398384.98,  src:'high', actual:null, projected:null },
-  { m:'Aug', rate:5.10, blended:930855.89, original:578590.82, incr:352265.07,  src:'high', actual:null, projected:null },
-  { m:'Sep', rate:4.90, blended:889154.78, original:580672.51, incr:308482.27,  src:'high', actual:null, projected:null },
-  { m:'Oct', rate:4.70, blended:917737.63, original:640463.71, incr:277273.92,  src:'high', actual:null, projected:null },
-  { m:'Nov', rate:4.40, blended:859158.63, original:654132.14, incr:205026.49,  src:'high', actual:null, projected:null },
-  { m:'Dec', rate:4.20, blended:820105.97, original:663895.31, incr:156210.66,  src:'high', actual:null, projected:null },
+  { m:'Apr', rate:5.10, blended:961702.79, original:616621.20, incr:345081.59,  src:'high', actual:null, projected:890467, projDays:22, projTotal:30 },
+  { m:'May', rate:5.258, blended:952301.08, original:583176.28, incr:369124.80,  src:'high', actual:null, projected:null },
+  { m:'Jun', rate:5.355, blended:907441.55, original:538823.53, incr:368618.02,  src:'high', actual:null, projected:null },
+  { m:'Jul', rate:5.161, blended:956262.01, original:583680.31, incr:372581.70,  src:'high', actual:null, projected:null },
+  { m:'Aug', rate:4.966, blended:906398.11, original:578590.82, incr:327807.29,  src:'high', actual:null, projected:null },
+  { m:'Sep', rate:4.771, blended:865792.67, original:580672.51, incr:285120.16,  src:'high', actual:null, projected:null },
+  { m:'Oct', rate:4.577, blended:893624.52, original:640463.71, incr:253160.81,  src:'high', actual:null, projected:null },
+  { m:'Nov', rate:4.284, blended:836584.66, original:654132.14, incr:182452.52,  src:'high', actual:null, projected:null },
+  { m:'Dec', rate:4.090, blended:798558.09, original:663895.31, incr:134662.78,  src:'high', actual:null, projected:null },
 ];
 const origRates = [3.42,3.38,3.32,3.27,3.22,3.18,3.15,3.17,3.20,3.28,3.35,3.40];
 const fcMaxCost = Math.max(...fcData.map(d => Math.max(d.blended, d.original, d.actual||0, d.projected||0)));
 
 const headerTitles = {
-  mtd:      { title: 'APRIL <span style="color:var(--accent)">MTD</span>',      meta: '<strong>Apr 1 – Apr 17, 2026</strong><br>16 days of activity · Report: April 21, 2026<div class="source-pills"><span class="pill pill-card">⬛ Fuel Card Transactions</span><span class="pill pill-onsite">⬛ On-Site Dispensing</span></div>' },
-  forecast: { title: '2026 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Scenario Analysis · 2026 Full Year</strong><br>Jan–Mar Actuals · Apr Projected · May–Dec High Case · Report: April 21, 2026' },
-  trend:    { title: 'DAILY COST <span style="color:var(--accent)">TREND</span>',  meta: '<strong>Jan 1 – Apr 17, 2026</strong><br>100 data points · Card + On-Site Blended · Report: April 21, 2026' },
+  mtd:      { title: 'APRIL <span style="color:var(--accent)">MTD</span>',      meta: '<strong>Apr 1 – Apr 24, 2026</strong><br>22 days of activity · Report: April 28, 2026<div class="source-pills"><span class="pill pill-card">⬛ Fuel Card Transactions</span><span class="pill pill-onsite">⬛ On-Site Dispensing</span></div>' },
+  forecast: { title: '2026 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Scenario Analysis · 2026 Full Year</strong><br>Jan–Mar Actuals · Apr Projected · May–Dec High Case · Report: April 28, 2026' },
+  trend:    { title: 'DAILY COST <span style="color:var(--accent)">TREND</span>',  meta: '<strong>Jan 1 – Apr 24, 2026</strong><br>106 data points · Card + On-Site Blended · Report: April 28, 2026' },
 };
 function switchTab(id) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -589,7 +595,7 @@ function buildForecast() {
 
   // Rate SVG
   const rsvg = document.getElementById('fcRateChart');
-  const rpX=30,rpY=12,rsvgW=680,rsvgH=90;
+  const rpX=30,rpY=16,rsvgW=680,rsvgH=160;
   const allR = fcData.map(d=>d.rate).concat(origRates);
   const rMin=Math.min(...allR)-0.05, rMax=Math.max(...allR)+0.05;
   const rxStep=(rsvgW-rpX*2)/(fcData.length-1);
@@ -664,13 +670,13 @@ function buildForecast() {
 
 
 // ── Trend Tab ──
-const trendData = [{"d":"01/02","fd":"Jan 2","s":11805.29,"g":3917.4,"c":3.0524,"t":125,"m":"Jan"},{"d":"01/03","fd":"Jan 3","s":5663.16,"g":1852.2,"c":3.2435,"t":47,"m":"Jan"},{"d":"01/04","fd":"Jan 4","s":100.67,"g":33.9,"c":2.969,"t":1,"m":"Jan"},{"d":"01/05","fd":"Jan 5","s":18436.72,"g":6138.9,"c":3.1043,"t":168,"m":"Jan"},{"d":"01/06","fd":"Jan 6","s":17478.8,"g":5801.9,"c":3.1839,"t":170,"m":"Jan"},{"d":"01/07","fd":"Jan 7","s":14414.1,"g":4882.1,"c":3.1328,"t":141,"m":"Jan"},{"d":"01/08","fd":"Jan 8","s":18938.8,"g":6385.6,"c":3.0698,"t":181,"m":"Jan"},{"d":"01/09","fd":"Jan 9","s":13022.01,"g":4399.9,"c":3.147,"t":132,"m":"Jan"},{"d":"01/10","fd":"Jan 10","s":4940.09,"g":1684.5,"c":2.9766,"t":48,"m":"Jan"},{"d":"01/11","fd":"Jan 11","s":40.08,"g":18.2,"c":2.199,"t":1,"m":"Jan"},{"d":"01/12","fd":"Jan 12","s":14922.1,"g":5158.2,"c":3.0618,"t":159,"m":"Jan"},{"d":"01/13","fd":"Jan 13","s":19503.62,"g":6476.2,"c":3.1087,"t":171,"m":"Jan"},{"d":"01/14","fd":"Jan 14","s":16838.81,"g":5583.3,"c":3.2557,"t":159,"m":"Jan"},{"d":"01/15","fd":"Jan 15","s":14886.45,"g":4870.3,"c":3.1354,"t":144,"m":"Jan"},{"d":"01/16","fd":"Jan 16","s":16114.75,"g":5342.7,"c":3.2281,"t":148,"m":"Jan"},{"d":"01/17","fd":"Jan 17","s":4963.63,"g":1645.5,"c":3.0782,"t":46,"m":"Jan"},{"d":"01/19","fd":"Jan 19","s":17979.83,"g":5976.6,"c":3.12,"t":159,"m":"Jan"},{"d":"01/20","fd":"Jan 20","s":18015.57,"g":6013.5,"c":3.1467,"t":186,"m":"Jan"},{"d":"01/21","fd":"Jan 21","s":16857.37,"g":5482.5,"c":3.1894,"t":160,"m":"Jan"},{"d":"01/22","fd":"Jan 22","s":15228.15,"g":5022.7,"c":3.1512,"t":153,"m":"Jan"},{"d":"01/23","fd":"Jan 23","s":17444.08,"g":5829.6,"c":3.1422,"t":190,"m":"Jan"},{"d":"01/24","fd":"Jan 24","s":4205.53,"g":1418.9,"c":3.2059,"t":39,"m":"Jan"},{"d":"01/26","fd":"Jan 26","s":5266.72,"g":1706.9,"c":3.2823,"t":56,"m":"Jan"},{"d":"01/27","fd":"Jan 27","s":9081.17,"g":2882.6,"c":3.2087,"t":77,"m":"Jan"},{"d":"01/28","fd":"Jan 28","s":12006.49,"g":3850.6,"c":3.2466,"t":115,"m":"Jan"},{"d":"01/29","fd":"Jan 29","s":17803.7,"g":5690.7,"c":3.2325,"t":164,"m":"Jan"},{"d":"01/30","fd":"Jan 30","s":15815.92,"g":5049.3,"c":3.2548,"t":150,"m":"Jan"},{"d":"01/31","fd":"Jan 31","s":5403.88,"g":1729.7,"c":3.2817,"t":52,"m":"Jan"},{"d":"02/02","fd":"Feb 2","s":19284.33,"g":6097.0,"c":3.2588,"t":173,"m":"Feb"},{"d":"02/03","fd":"Feb 3","s":16047.05,"g":5135.1,"c":3.2842,"t":164,"m":"Feb"},{"d":"02/04","fd":"Feb 4","s":17139.11,"g":5472.6,"c":3.171,"t":154,"m":"Feb"},{"d":"02/05","fd":"Feb 5","s":17181.74,"g":5621.1,"c":3.2091,"t":182,"m":"Feb"},{"d":"02/06","fd":"Feb 6","s":15011.73,"g":4765.6,"c":3.2579,"t":149,"m":"Feb"},{"d":"02/07","fd":"Feb 7","s":6530.58,"g":2086.2,"c":3.1938,"t":57,"m":"Feb"},{"d":"02/08","fd":"Feb 8","s":89.38,"g":30.1,"c":2.969,"t":1,"m":"Feb"},{"d":"02/09","fd":"Feb 9","s":16115.94,"g":5111.5,"c":3.2985,"t":158,"m":"Feb"},{"d":"02/10","fd":"Feb 10","s":20309.4,"g":6246.9,"c":3.2773,"t":174,"m":"Feb"},{"d":"02/11","fd":"Feb 11","s":15405.2,"g":4787.7,"c":3.2916,"t":146,"m":"Feb"},{"d":"02/12","fd":"Feb 12","s":23005.78,"g":7175.1,"c":3.287,"t":191,"m":"Feb"},{"d":"02/13","fd":"Feb 13","s":14548.12,"g":4593.6,"c":3.3451,"t":129,"m":"Feb"},{"d":"02/14","fd":"Feb 14","s":5817.0,"g":1858.0,"c":3.3108,"t":53,"m":"Feb"},{"d":"02/16","fd":"Feb 16","s":18172.14,"g":5711.0,"c":3.2857,"t":163,"m":"Feb"},{"d":"02/17","fd":"Feb 17","s":21480.57,"g":6777.4,"c":3.3042,"t":187,"m":"Feb"},{"d":"02/18","fd":"Feb 18","s":17895.29,"g":5723.5,"c":3.2146,"t":161,"m":"Feb"},{"d":"02/19","fd":"Feb 19","s":17392.07,"g":5583.1,"c":3.2299,"t":166,"m":"Feb"},{"d":"02/20","fd":"Feb 20","s":17818.94,"g":5652.0,"c":3.3098,"t":162,"m":"Feb"},{"d":"02/21","fd":"Feb 21","s":5760.4,"g":1761.5,"c":3.3415,"t":49,"m":"Feb"},{"d":"02/23","fd":"Feb 23","s":17760.87,"g":5598.2,"c":3.2452,"t":167,"m":"Feb"},{"d":"02/24","fd":"Feb 24","s":21929.76,"g":6683.3,"c":3.3438,"t":189,"m":"Feb"},{"d":"02/25","fd":"Feb 25","s":21639.08,"g":6491.8,"c":3.4399,"t":182,"m":"Feb"},{"d":"02/26","fd":"Feb 26","s":15872.89,"g":4785.5,"c":3.3269,"t":137,"m":"Feb"},{"d":"02/27","fd":"Feb 27","s":17484.6,"g":5361.3,"c":3.3267,"t":156,"m":"Feb"},{"d":"02/28","fd":"Feb 28","s":9541.77,"g":2829.5,"c":3.4011,"t":74,"m":"Feb"},{"d":"03/01","fd":"Mar 1","s":488.21,"g":152.8,"c":3.4031,"t":7,"m":"Mar"},{"d":"03/02","fd":"Mar 2","s":18617.41,"g":5457.1,"c":3.4877,"t":148,"m":"Mar"},{"d":"03/03","fd":"Mar 3","s":23062.68,"g":6340.2,"c":3.6516,"t":169,"m":"Mar"},{"d":"03/04","fd":"Mar 4","s":21842.4,"g":5828.7,"c":3.7928,"t":175,"m":"Mar"},{"d":"03/05","fd":"Mar 5","s":23227.05,"g":5884.3,"c":3.9799,"t":175,"m":"Mar"},{"d":"03/06","fd":"Mar 6","s":22042.66,"g":5233.9,"c":4.204,"t":153,"m":"Mar"},{"d":"03/07","fd":"Mar 7","s":8935.82,"g":2075.5,"c":4.2696,"t":56,"m":"Mar"},{"d":"03/08","fd":"Mar 8","s":131.99,"g":30.0,"c":4.399,"t":1,"m":"Mar"},{"d":"03/09","fd":"Mar 9","s":24378.99,"g":5659.2,"c":4.3389,"t":169,"m":"Mar"},{"d":"03/10","fd":"Mar 10","s":25016.52,"g":5697.2,"c":4.3619,"t":173,"m":"Mar"},{"d":"03/11","fd":"Mar 11","s":22883.71,"g":5129.1,"c":4.4281,"t":144,"m":"Mar"},{"d":"03/12","fd":"Mar 12","s":25229.97,"g":5682.1,"c":4.3259,"t":163,"m":"Mar"},{"d":"03/13","fd":"Mar 13","s":20218.36,"g":4547.9,"c":4.3638,"t":136,"m":"Mar"},{"d":"03/14","fd":"Mar 14","s":9775.74,"g":2133.3,"c":4.5121,"t":66,"m":"Mar"},{"d":"03/15","fd":"Mar 15","s":313.53,"g":67.2,"c":4.634,"t":2,"m":"Mar"},{"d":"03/16","fd":"Mar 16","s":26822.35,"g":5919.1,"c":4.4477,"t":169,"m":"Mar"},{"d":"03/17","fd":"Mar 17","s":28789.58,"g":6179.5,"c":4.561,"t":181,"m":"Mar"},{"d":"03/18","fd":"Mar 18","s":29124.49,"g":6214.1,"c":4.5944,"t":175,"m":"Mar"},{"d":"03/19","fd":"Mar 19","s":26549.71,"g":5568.5,"c":4.6206,"t":161,"m":"Mar"},{"d":"03/20","fd":"Mar 20","s":25782.1,"g":5416.2,"c":4.6544,"t":163,"m":"Mar"},{"d":"03/21","fd":"Mar 21","s":7110.39,"g":1515.9,"c":4.4844,"t":60,"m":"Mar"},{"d":"03/22","fd":"Mar 22","s":191.97,"g":40.9,"c":4.698,"t":1,"m":"Mar"},{"d":"03/23","fd":"Mar 23","s":26747.95,"g":5490.3,"c":4.7797,"t":168,"m":"Mar"},{"d":"03/24","fd":"Mar 24","s":34185.57,"g":7089.9,"c":4.7456,"t":209,"m":"Mar"},{"d":"03/25","fd":"Mar 25","s":27602.63,"g":5692.3,"c":4.7153,"t":163,"m":"Mar"},{"d":"03/26","fd":"Mar 26","s":27561.13,"g":5692.1,"c":4.7168,"t":172,"m":"Mar"},{"d":"03/27","fd":"Mar 27","s":27350.61,"g":5705.1,"c":4.7013,"t":169,"m":"Mar"},{"d":"03/28","fd":"Mar 28","s":9288.79,"g":1918.8,"c":4.8614,"t":55,"m":"Mar"},{"d":"03/29","fd":"Mar 29","s":182.86,"g":34.8,"c":5.249,"t":1,"m":"Mar"},{"d":"03/30","fd":"Mar 30","s":30743.48,"g":6332.1,"c":4.8199,"t":185,"m":"Mar"},{"d":"03/31","fd":"Mar 31","s":30791.45,"g":6181.8,"c":4.869,"t":189,"m":"Mar"},{"d":"04/01","fd":"Apr 1","s":28100.52,"g":5574.3,"c":4.883,"t":167,"m":"Apr"},{"d":"04/02","fd":"Apr 2","s":29906.81,"g":5894.0,"c":4.955,"t":167,"m":"Apr"},{"d":"04/03","fd":"Apr 3","s":22397.46,"g":4487.5,"c":4.91,"t":146,"m":"Apr"},{"d":"04/04","fd":"Apr 4","s":5951.63,"g":1156.4,"c":5.149,"t":43,"m":"Apr"},{"d":"04/05","fd":"Apr 5","s":156.07,"g":29.5,"c":5.299,"t":1,"m":"Apr"},{"d":"04/06","fd":"Apr 6","s":30009.83,"g":5809.8,"c":4.998,"t":163,"m":"Apr"},{"d":"04/07","fd":"Apr 7","s":25925.45,"g":4978.2,"c":5.025,"t":157,"m":"Apr"},{"d":"04/08","fd":"Apr 8","s":30617.91,"g":5821.0,"c":5.155,"t":173,"m":"Apr"},{"d":"04/09","fd":"Apr 9","s":28532.81,"g":5455.9,"c":5.083,"t":160,"m":"Apr"},{"d":"04/10","fd":"Apr 10","s":24969.85,"g":4831.2,"c":5.057,"t":145,"m":"Apr"},{"d":"04/11","fd":"Apr 11","s":10267.51,"g":1964.5,"c":5.094,"t":53,"m":"Apr"},{"d":"04/13","fd":"Apr 13","s":27813.95,"g":5393.9,"c":5.002,"t":154,"m":"Apr"},{"d":"04/14","fd":"Apr 14","s":27824.86,"g":5495.5,"c":4.931,"t":168,"m":"Apr"},{"d":"04/15","fd":"Apr 15","s":28595.04,"g":5620.5,"c":4.973,"t":173,"m":"Apr"},{"d":"04/16","fd":"Apr 16","s":29640.94,"g":5952.9,"c":4.841,"t":184,"m":"Apr"},{"d":"04/17","fd":"Apr 17","s":24693.01,"g":4960.7,"c":4.836,"t":151,"m":"Apr"}];
+const trendData = [{"d":"01/02","fd":"Jan 2","s":11805.29,"g":3917.4,"c":3.0524,"t":125,"m":"Jan"},{"d":"01/03","fd":"Jan 3","s":5663.16,"g":1852.2,"c":3.2435,"t":47,"m":"Jan"},{"d":"01/04","fd":"Jan 4","s":100.67,"g":33.9,"c":2.969,"t":1,"m":"Jan"},{"d":"01/05","fd":"Jan 5","s":18436.72,"g":6138.9,"c":3.1043,"t":168,"m":"Jan"},{"d":"01/06","fd":"Jan 6","s":17478.8,"g":5801.9,"c":3.1839,"t":170,"m":"Jan"},{"d":"01/07","fd":"Jan 7","s":14414.1,"g":4882.1,"c":3.1328,"t":141,"m":"Jan"},{"d":"01/08","fd":"Jan 8","s":18938.8,"g":6385.6,"c":3.0698,"t":181,"m":"Jan"},{"d":"01/09","fd":"Jan 9","s":13022.01,"g":4399.9,"c":3.147,"t":132,"m":"Jan"},{"d":"01/10","fd":"Jan 10","s":4940.09,"g":1684.5,"c":2.9766,"t":48,"m":"Jan"},{"d":"01/11","fd":"Jan 11","s":40.08,"g":18.2,"c":2.199,"t":1,"m":"Jan"},{"d":"01/12","fd":"Jan 12","s":14922.1,"g":5158.2,"c":3.0618,"t":159,"m":"Jan"},{"d":"01/13","fd":"Jan 13","s":19503.62,"g":6476.2,"c":3.1087,"t":171,"m":"Jan"},{"d":"01/14","fd":"Jan 14","s":16838.81,"g":5583.3,"c":3.2557,"t":159,"m":"Jan"},{"d":"01/15","fd":"Jan 15","s":14886.45,"g":4870.3,"c":3.1354,"t":144,"m":"Jan"},{"d":"01/16","fd":"Jan 16","s":16114.75,"g":5342.7,"c":3.2281,"t":148,"m":"Jan"},{"d":"01/17","fd":"Jan 17","s":4963.63,"g":1645.5,"c":3.0782,"t":46,"m":"Jan"},{"d":"01/19","fd":"Jan 19","s":17979.83,"g":5976.6,"c":3.12,"t":159,"m":"Jan"},{"d":"01/20","fd":"Jan 20","s":18015.57,"g":6013.5,"c":3.1467,"t":186,"m":"Jan"},{"d":"01/21","fd":"Jan 21","s":16857.37,"g":5482.5,"c":3.1894,"t":160,"m":"Jan"},{"d":"01/22","fd":"Jan 22","s":15228.15,"g":5022.7,"c":3.1512,"t":153,"m":"Jan"},{"d":"01/23","fd":"Jan 23","s":17444.08,"g":5829.6,"c":3.1422,"t":190,"m":"Jan"},{"d":"01/24","fd":"Jan 24","s":4205.53,"g":1418.9,"c":3.2059,"t":39,"m":"Jan"},{"d":"01/26","fd":"Jan 26","s":5266.72,"g":1706.9,"c":3.2823,"t":56,"m":"Jan"},{"d":"01/27","fd":"Jan 27","s":9081.17,"g":2882.6,"c":3.2087,"t":77,"m":"Jan"},{"d":"01/28","fd":"Jan 28","s":12006.49,"g":3850.6,"c":3.2466,"t":115,"m":"Jan"},{"d":"01/29","fd":"Jan 29","s":17803.7,"g":5690.7,"c":3.2325,"t":164,"m":"Jan"},{"d":"01/30","fd":"Jan 30","s":15815.92,"g":5049.3,"c":3.2548,"t":150,"m":"Jan"},{"d":"01/31","fd":"Jan 31","s":5403.88,"g":1729.7,"c":3.2817,"t":52,"m":"Jan"},{"d":"02/02","fd":"Feb 2","s":19284.33,"g":6097.0,"c":3.2588,"t":173,"m":"Feb"},{"d":"02/03","fd":"Feb 3","s":16047.05,"g":5135.1,"c":3.2842,"t":164,"m":"Feb"},{"d":"02/04","fd":"Feb 4","s":17139.11,"g":5472.6,"c":3.171,"t":154,"m":"Feb"},{"d":"02/05","fd":"Feb 5","s":17181.74,"g":5621.1,"c":3.2091,"t":182,"m":"Feb"},{"d":"02/06","fd":"Feb 6","s":15011.73,"g":4765.6,"c":3.2579,"t":149,"m":"Feb"},{"d":"02/07","fd":"Feb 7","s":6530.58,"g":2086.2,"c":3.1938,"t":57,"m":"Feb"},{"d":"02/08","fd":"Feb 8","s":89.38,"g":30.1,"c":2.969,"t":1,"m":"Feb"},{"d":"02/09","fd":"Feb 9","s":16115.94,"g":5111.5,"c":3.2985,"t":158,"m":"Feb"},{"d":"02/10","fd":"Feb 10","s":20309.4,"g":6246.9,"c":3.2773,"t":174,"m":"Feb"},{"d":"02/11","fd":"Feb 11","s":15405.2,"g":4787.7,"c":3.2916,"t":146,"m":"Feb"},{"d":"02/12","fd":"Feb 12","s":23005.78,"g":7175.1,"c":3.287,"t":191,"m":"Feb"},{"d":"02/13","fd":"Feb 13","s":14548.12,"g":4593.6,"c":3.3451,"t":129,"m":"Feb"},{"d":"02/14","fd":"Feb 14","s":5817.0,"g":1858.0,"c":3.3108,"t":53,"m":"Feb"},{"d":"02/16","fd":"Feb 16","s":18172.14,"g":5711.0,"c":3.2857,"t":163,"m":"Feb"},{"d":"02/17","fd":"Feb 17","s":21480.57,"g":6777.4,"c":3.3042,"t":187,"m":"Feb"},{"d":"02/18","fd":"Feb 18","s":17895.29,"g":5723.5,"c":3.2146,"t":161,"m":"Feb"},{"d":"02/19","fd":"Feb 19","s":17392.07,"g":5583.1,"c":3.2299,"t":166,"m":"Feb"},{"d":"02/20","fd":"Feb 20","s":17818.94,"g":5652.0,"c":3.3098,"t":162,"m":"Feb"},{"d":"02/21","fd":"Feb 21","s":5760.4,"g":1761.5,"c":3.3415,"t":49,"m":"Feb"},{"d":"02/23","fd":"Feb 23","s":17760.87,"g":5598.2,"c":3.2452,"t":167,"m":"Feb"},{"d":"02/24","fd":"Feb 24","s":21929.76,"g":6683.3,"c":3.3438,"t":189,"m":"Feb"},{"d":"02/25","fd":"Feb 25","s":21639.08,"g":6491.8,"c":3.4399,"t":182,"m":"Feb"},{"d":"02/26","fd":"Feb 26","s":15872.89,"g":4785.5,"c":3.3269,"t":137,"m":"Feb"},{"d":"02/27","fd":"Feb 27","s":17484.6,"g":5361.3,"c":3.3267,"t":156,"m":"Feb"},{"d":"02/28","fd":"Feb 28","s":9541.77,"g":2829.5,"c":3.4011,"t":74,"m":"Feb"},{"d":"03/01","fd":"Mar 1","s":488.21,"g":152.8,"c":3.4031,"t":7,"m":"Mar"},{"d":"03/02","fd":"Mar 2","s":18617.41,"g":5457.1,"c":3.4877,"t":148,"m":"Mar"},{"d":"03/03","fd":"Mar 3","s":23062.68,"g":6340.2,"c":3.6516,"t":169,"m":"Mar"},{"d":"03/04","fd":"Mar 4","s":21842.4,"g":5828.7,"c":3.7928,"t":175,"m":"Mar"},{"d":"03/05","fd":"Mar 5","s":23227.05,"g":5884.3,"c":3.9799,"t":175,"m":"Mar"},{"d":"03/06","fd":"Mar 6","s":22042.66,"g":5233.9,"c":4.204,"t":153,"m":"Mar"},{"d":"03/07","fd":"Mar 7","s":8935.82,"g":2075.5,"c":4.2696,"t":56,"m":"Mar"},{"d":"03/08","fd":"Mar 8","s":131.99,"g":30.0,"c":4.399,"t":1,"m":"Mar"},{"d":"03/09","fd":"Mar 9","s":24378.99,"g":5659.2,"c":4.3389,"t":169,"m":"Mar"},{"d":"03/10","fd":"Mar 10","s":25016.52,"g":5697.2,"c":4.3619,"t":173,"m":"Mar"},{"d":"03/11","fd":"Mar 11","s":22883.71,"g":5129.1,"c":4.4281,"t":144,"m":"Mar"},{"d":"03/12","fd":"Mar 12","s":25229.97,"g":5682.1,"c":4.3259,"t":163,"m":"Mar"},{"d":"03/13","fd":"Mar 13","s":20218.36,"g":4547.9,"c":4.3638,"t":136,"m":"Mar"},{"d":"03/14","fd":"Mar 14","s":9775.74,"g":2133.3,"c":4.5121,"t":66,"m":"Mar"},{"d":"03/15","fd":"Mar 15","s":313.53,"g":67.2,"c":4.634,"t":2,"m":"Mar"},{"d":"03/16","fd":"Mar 16","s":26822.35,"g":5919.1,"c":4.4477,"t":169,"m":"Mar"},{"d":"03/17","fd":"Mar 17","s":28789.58,"g":6179.5,"c":4.561,"t":181,"m":"Mar"},{"d":"03/18","fd":"Mar 18","s":29124.49,"g":6214.1,"c":4.5944,"t":175,"m":"Mar"},{"d":"03/19","fd":"Mar 19","s":26549.71,"g":5568.5,"c":4.6206,"t":161,"m":"Mar"},{"d":"03/20","fd":"Mar 20","s":25782.1,"g":5416.2,"c":4.6544,"t":163,"m":"Mar"},{"d":"03/21","fd":"Mar 21","s":7110.39,"g":1515.9,"c":4.4844,"t":60,"m":"Mar"},{"d":"03/22","fd":"Mar 22","s":191.97,"g":40.9,"c":4.698,"t":1,"m":"Mar"},{"d":"03/23","fd":"Mar 23","s":26747.95,"g":5490.3,"c":4.7797,"t":168,"m":"Mar"},{"d":"03/24","fd":"Mar 24","s":34185.57,"g":7089.9,"c":4.7456,"t":209,"m":"Mar"},{"d":"03/25","fd":"Mar 25","s":27602.63,"g":5692.3,"c":4.7153,"t":163,"m":"Mar"},{"d":"03/26","fd":"Mar 26","s":27561.13,"g":5692.1,"c":4.7168,"t":172,"m":"Mar"},{"d":"03/27","fd":"Mar 27","s":27350.61,"g":5705.1,"c":4.7013,"t":169,"m":"Mar"},{"d":"03/28","fd":"Mar 28","s":9288.79,"g":1918.8,"c":4.8614,"t":55,"m":"Mar"},{"d":"03/29","fd":"Mar 29","s":182.86,"g":34.8,"c":5.249,"t":1,"m":"Mar"},{"d":"03/30","fd":"Mar 30","s":30743.48,"g":6332.1,"c":4.8199,"t":185,"m":"Mar"},{"d":"03/31","fd":"Mar 31","s":30791.45,"g":6181.8,"c":4.869,"t":189,"m":"Mar"},{"d":"04/01","fd":"Apr 1","s":28100.52,"g":5574.3,"c":4.883,"t":167,"m":"Apr"},{"d":"04/02","fd":"Apr 2","s":29906.81,"g":5894.0,"c":4.955,"t":167,"m":"Apr"},{"d":"04/03","fd":"Apr 3","s":22397.46,"g":4487.5,"c":4.91,"t":146,"m":"Apr"},{"d":"04/04","fd":"Apr 4","s":5951.63,"g":1156.4,"c":5.149,"t":43,"m":"Apr"},{"d":"04/05","fd":"Apr 5","s":156.07,"g":29.5,"c":5.299,"t":1,"m":"Apr"},{"d":"04/06","fd":"Apr 6","s":30009.83,"g":5809.8,"c":4.998,"t":163,"m":"Apr"},{"d":"04/07","fd":"Apr 7","s":25925.45,"g":4978.2,"c":5.025,"t":157,"m":"Apr"},{"d":"04/08","fd":"Apr 8","s":30617.91,"g":5821.0,"c":5.155,"t":173,"m":"Apr"},{"d":"04/09","fd":"Apr 9","s":28532.81,"g":5455.9,"c":5.083,"t":160,"m":"Apr"},{"d":"04/10","fd":"Apr 10","s":24969.85,"g":4831.2,"c":5.057,"t":145,"m":"Apr"},{"d":"04/11","fd":"Apr 11","s":10267.51,"g":1964.5,"c":5.094,"t":53,"m":"Apr"},{"d":"04/13","fd":"Apr 13","s":27813.95,"g":5393.9,"c":5.002,"t":154,"m":"Apr"},{"d":"04/14","fd":"Apr 14","s":27824.86,"g":5495.5,"c":4.931,"t":168,"m":"Apr"},{"d":"04/15","fd":"Apr 15","s":28595.04,"g":5620.5,"c":4.973,"t":173,"m":"Apr"},{"d":"04/16","fd":"Apr 16","s":29640.94,"g":5952.9,"c":4.841,"t":184,"m":"Apr"},{"d":"04/17","fd":"Apr 17","s":24693.01,"g":4960.7,"c":4.836,"t":151,"m":"Apr"},{"d":"04/18","fd":"Apr 18","s":6913.31,"g":1401.5,"c":4.933,"t":53,"m":"Apr"},{"d":"04/20","fd":"Apr 20","s":26675.06,"g":5407.7,"c":4.933,"t":154,"m":"Apr"},{"d":"04/21","fd":"Apr 21","s":25164.30,"g":5269.5,"c":4.775,"t":168,"m":"Apr"},{"d":"04/22","fd":"Apr 22","s":22965.96,"g":4767.9,"c":4.817,"t":173,"m":"Apr"},{"d":"04/23","fd":"Apr 23","s":25582.46,"g":5322.4,"c":4.807,"t":184,"m":"Apr"},{"d":"04/24","fd":"Apr 24","s":25025.25,"g":5205.6,"c":4.807,"t":151,"m":"Apr"}];
 
 const mColors = { Jan:'#4ab8f5', Feb:'#3ab54a', Mar:'#f5a800', Apr:'#f0d500' };
-const mMult  = { Jan:1.41444, Feb:1.40863, Mar:1.39222, Apr:1.44688 };
+const mMult  = { Jan:1.41444, Feb:1.40863, Mar:1.39222, Apr:1.44983 };
 // Apply monthly on-site multiplier to each day's card spend
 trendData.forEach(d => { d.bs = Math.round(d.s * mMult[d.m] * 100) / 100; });
-const mAvgs   = { Jan:17543, Feb:21934, Mar:27176, Apr:33404 };
+const mAvgs   = { Jan:17543, Feb:21934, Mar:27176, Apr:33059 };
 const cpgAvgs = { Jan:3.122, Feb:3.277, Mar:4.441, Apr:5.055 };
 
 let trendBuilt = false;
@@ -867,7 +873,7 @@ function buildTrend() {
 <!-- ── Forecast Tab ── -->
 <div id="tab-forecast" class="tab-content">
 
-<div class="sec-label sy">2026 Fuel Cost Forecast — Blended Scenario · Iran Conflict Impact on Diesel</div>
+<div class="sec-label sy">2026 Fuel Cost Forecast — Revised Scenario · Apr Actuals Applied to May–Dec · 2.63% Rate Reduction</div>
 
 <!-- Hero KPIs -->
 <div class="fc-hero">
@@ -878,13 +884,13 @@ function buildTrend() {
   </div>
   <div class="fc-hero-cell fc-hc-blend">
     <div class="fc-hero-label">Updated Full Year Est.</div>
-    <div class="fc-hero-val" style="color:var(--accent)">$10,088,029</div>
-    <div class="fc-hero-sub">Q1 Actuals + Apr Proj + May–Dec High</div>
+    <div class="fc-hero-val" style="color:var(--accent)">$9,889,055</div>
+    <div class="fc-hero-sub">Q1 Actuals + Apr Proj + May–Dec Revised</div>
   </div>
   <div class="fc-hero-cell fc-hc-incr">
     <div class="fc-hero-label">Incremental Over Budget</div>
-    <div class="fc-hero-val" style="color:var(--accent2)">+$2,885,039</div>
-    <div class="fc-hero-sub">Q1 actual + Apr proj + May–Dec high vs. budget</div>
+    <div class="fc-hero-val" style="color:var(--accent2)">+$2,686,065</div>
+    <div class="fc-hero-sub">Q1 actual + Apr proj + May–Dec revised vs. budget</div>
   </div>
   <div class="fc-hero-cell fc-hc-pct">
     <div class="fc-hero-label">Q1 Actual vs Budget</div>
@@ -905,12 +911,12 @@ function buildTrend() {
       <div class="leg-item" style="margin-left:8px;font-size:9px;">
         <span style="background:rgba(94,125,98,0.3);padding:2px 6px;border:1px solid var(--muted);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:var(--muted)">JAN–FEB: ORIG</span>&nbsp;
         <span style="background:rgba(58,181,74,0.1);padding:2px 6px;border:1px solid var(--green);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:var(--green)">MAR: LOW</span>&nbsp;
-        <span style="background:rgba(245,168,0,0.1);padding:2px 6px;border:1px solid var(--accent2);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:var(--accent2)">APR–DEC: HIGH</span>
+        <span style="background:rgba(245,168,0,0.1);padding:2px 6px;border:1px solid var(--accent2);font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:var(--accent2)">APR–DEC: REVISED HIGH</span>
       </div>
     </div>
     <div class="fc-rate-wrap">
       <div class="pt">Rate Per Gallon — Blended vs. Original</div>
-      <svg style="width:100%;height:90px;overflow:visible;" id="fcRateChart" viewBox="0 0 680 90"></svg>
+      <svg style="width:100%;height:160px;overflow:visible;" id="fcRateChart" viewBox="0 0 680 160"></svg>
     </div>
   </div>
 
@@ -932,9 +938,9 @@ function buildTrend() {
         <tr style="border-top:1px solid var(--border);">
           <td style="color:var(--text);font-weight:600;">TOTAL</td>
           <td style="color:var(--text);font-weight:600;">—</td>
-          <td style="color:var(--accent);font-weight:600;">$10,088,029</td>
+          <td style="color:var(--accent);font-weight:600;">$9,889,055</td>
           <td style="color:var(--muted);font-weight:600;">$7,202,990</td>
-          <td style="color:var(--accent2);font-weight:600;">+$2,885,039</td>
+          <td style="color:var(--accent2);font-weight:600;">+$2,686,065</td>
           <td></td>
         </tr>
       </tfoot>
@@ -964,9 +970,9 @@ function buildTrend() {
   </div>
   <div class="fc-sc-cell">
     <div class="fc-sc-label">High Case (Full Year)</div>
-    <div class="fc-sc-val" style="color:var(--accent2)">$10,231,007</div>
-    <div class="fc-sc-bar" style="background:var(--accent2);width:100%"></div>
-    <div class="fc-sc-sub">+$3,028,017 vs. budget (+42.0%)</div>
+    <div class="fc-sc-val" style="color:var(--accent2)">$10,038,966</div>
+    <div class="fc-sc-bar" style="background:var(--accent2);width:98%"></div>
+    <div class="fc-sc-sub">+$2,835,976 vs. budget (+39.4%)</div>
   </div>
 </div>
 
@@ -977,7 +983,7 @@ function buildTrend() {
 <div id="tab-trend" class="tab-content">
 <div class="trend-tab">
 
-  <div class="section-label sy" style="margin:-32px -48px 28px -48px;padding:7px 48px;">Daily Fuel Cost Trend — Jan 1 through Apr 17, 2026 · Card + On-Site Blended</div>
+  <div class="section-label sy" style="margin:-32px -48px 28px -48px;padding:7px 48px;">Daily Fuel Cost Trend — Jan 1 through Apr 24, 2026 · Card + On-Site Blended</div>
 
   <!-- Monthly avg KPIs -->
   <div class="trend-kpi-strip">
@@ -998,14 +1004,14 @@ function buildTrend() {
     </div>
     <div class="trend-kpi-cell tk-apr">
       <div class="trend-kpi-label">April MTD Avg / Day</div>
-      <div class="trend-kpi-val" style="color:#f0d500">$33,404</div>
-      <div class="trend-kpi-sub">16 days · card + on-site est · $4.94 CPG</div>
+      <div class="trend-kpi-val" style="color:#f0d500">$33,059</div>
+      <div class="trend-kpi-sub">22 days · card + on-site est · $4.97 CPG</div>
     </div>
   </div>
 
   <!-- Main spend chart -->
   <div class="trend-chart-wrap">
-    <div class="pt">Daily Combined Spend (Card + On-Site Est.) — Jan through Apr 17 · 100 data points</div>
+    <div class="pt">Daily Combined Spend (Card + On-Site Est.) — Jan through Apr 24 · 106 data points</div>
     <div style="display:flex;gap:16px;margin-bottom:18px;flex-wrap:wrap;">
       <div class="leg-item"><div class="leg-dot" style="background:#4ab8f5"></div>January</div>
       <div class="leg-item"><div class="leg-dot" style="background:#3ab54a"></div>February</div>
@@ -1024,7 +1030,7 @@ function buildTrend() {
       <div class="leg-item"><div class="leg-dot" style="background:#4ab8f5"></div>January avg $3.12</div>
       <div class="leg-item"><div class="leg-dot" style="background:#3ab54a"></div>February avg $3.28</div>
       <div class="leg-item"><div class="leg-dot" style="background:#f5a800"></div>March avg $4.44</div>
-      <div class="leg-item"><div class="leg-dot" style="background:#f0d500"></div>April MTD avg $4.94</div>
+      <div class="leg-item"><div class="leg-dot" style="background:#f0d500"></div>April MTD avg $4.97</div>
     </div>
     <div class="trend-svg-wrap">
       <svg id="trendCpgSvg" style="width:100%;height:180px;overflow:visible;" viewBox="0 0 1200 180"></svg>
