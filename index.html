@@ -539,9 +539,11 @@ function switchTab(id) {
   if (id === 'trend') buildTrend();
 }
 
-let fcBuilt = false;
 function buildForecast() {
-  if (fcBuilt) return; fcBuilt = true;
+  // Always rebuild to ensure latest fcData is reflected
+  document.getElementById('fcBars').innerHTML = '';
+  document.getElementById('fcTableBody').innerHTML = '';
+  document.getElementById('fcRateChart').innerHTML = '';
   const fcTT = document.getElementById('tt');
 
   // Bar chart
@@ -641,11 +643,11 @@ function buildForecast() {
       displayVal = d.actual; displayColor = 'var(--blue)';
       displayType = 'Actual'; displayTypeCls = 'fc-src-orig';
     } else if (d.projected) {
-      displayVal = d.blended; displayColor = 'var(--accent2)';
+      displayVal = d.projected; displayColor = 'var(--accent2)';
       displayType = 'High Case Fcst'; displayTypeCls = 'fc-src-high';
       const projVsB = d.projected - d.original;
       const projVsBStr = (projVsB>=0?'+$':'-$')+Math.abs(projVsB).toLocaleString(undefined,{maximumFractionDigits:0});
-      const projNote = `<span style="color:var(--green);font-size:10px;display:block;margin-top:2px;">▶ MTD Proj: $${d.projected.toLocaleString()} (${d.projDays}/${d.projTotal}d) ${projVsBStr} vs budget</span>`;
+      const projNote = `<span style="color:var(--green);font-size:10px;display:block;margin-top:2px;">▶ MTD Proj (${d.projDays}/${d.projTotal}d) ${projVsBStr} vs budget</span>`;
       extraCol = projNote;
     } else {
       displayVal = d.blended; displayColor = 'var(--accent2)';
@@ -657,6 +659,19 @@ function buildForecast() {
     tr.innerHTML=`<td>${d.m}</td><td>$${d.rate.toFixed(2)}</td><td style="color:${displayColor};font-weight:600">$${displayVal.toLocaleString(undefined,{maximumFractionDigits:0})}${extraCol}</td><td style="color:var(--muted)">$${d.original.toLocaleString(undefined,{maximumFractionDigits:0})}</td><td class="${vsBCls}">${vsBStr}</td><td class="${displayTypeCls}">${displayType}</td>`;
     fcTbody.appendChild(tr);
   });
+  // Dynamically calculate correct total from displayed values
+  let runningTotal = 0;
+  fcData.forEach(d => {
+    if (d.actual)         runningTotal += d.actual;
+    else if (d.projected) runningTotal += d.projected;
+    else                  runningTotal += d.blended;
+  });
+  const budgetTotal = 7202989.92;
+  const incrTotal   = runningTotal - budgetTotal;
+  const el = document.getElementById('fcTotalVal');
+  const el2 = document.getElementById('fcTotalIncr');
+  if (el)  el.textContent  = '$' + Math.round(runningTotal).toLocaleString();
+  if (el2) el2.textContent = (incrTotal>=0?'+$':'-$') + Math.round(Math.abs(incrTotal)).toLocaleString();
 }
 
 
@@ -670,9 +685,10 @@ trendData.forEach(d => { d.bs = Math.round(d.s * mMult[d.m] * 100) / 100; });
 const mAvgs   = { Jan:17543, Feb:21934, Mar:27176, Apr:31870, May:29930 };
 const cpgAvgs = { Jan:3.122, Feb:3.277, Mar:4.441, Apr:4.936, May:4.937 };
 
-let trendBuilt = false;
 function buildTrend() {
-  if (trendBuilt) return; trendBuilt = true;
+  // Always rebuild to ensure latest trendData is reflected
+  document.getElementById('trendSpendSvg').innerHTML = '';
+  document.getElementById('trendCpgSvg').innerHTML = '';
   const tTT = document.getElementById('tt');
 
   // ── Spend Chart ──
@@ -929,9 +945,9 @@ function buildTrend() {
         <tr style="border-top:1px solid var(--border);">
           <td style="color:var(--text);font-weight:600;">TOTAL</td>
           <td style="color:var(--text);font-weight:600;">—</td>
-          <td style="color:var(--accent);font-weight:600;">$10,152,332</td>
+          <td id="fcTotalVal" style="color:var(--accent);font-weight:600;">$9,736,049</td>
           <td style="color:var(--muted);font-weight:600;">$7,202,990</td>
-          <td style="color:var(--accent2);font-weight:600;">+$2,949,342</td>
+          <td id="fcTotalIncr" style="color:var(--accent2);font-weight:600;">+$2,533,059</td>
           <td></td>
         </tr>
       </tfoot>
