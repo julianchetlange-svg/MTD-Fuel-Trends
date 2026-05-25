@@ -530,8 +530,8 @@ const origRates = [3.42,3.38,3.32,3.27,3.22,3.18,3.15,3.17,3.20,3.28,3.35,3.40];
 const fcMaxCost = Math.max(...fcData.map(d => Math.max(d.blended, d.original, d.actual||0, d.projected||0)));
 
 const headerTitles = {
-  mtd:      { title: 'MAY <span style="color:var(--accent)">MTD</span>',      meta: '<strong>May 1 – May 7, 2026</strong><br>7 days of activity · Report: May 12, 2026<div class="source-pills"><span class="pill pill-card">⬛ Fuel Card Transactions</span><span class="pill pill-onsite">⬛ On-Site Dispensing</span></div>' },
-  forecast: { title: '2026 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Scenario Analysis · 2026 Full Year</strong><br>Jan–Mar Actuals · Apr–Dec High Case · Report: May 26, 2026' },
+  mtd:      { title: 'MAY <span style="color:var(--accent)">MTD</span>',      meta: '<strong>May 1 – May 21, 2026</strong><br>19 days of activity · Report: May 26, 2026<div class="source-pills"><span class="pill pill-card">⬛ Fuel Card Transactions</span><span class="pill pill-onsite">⬛ On-Site Dispensing</span></div>' },
+  forecast: { title: '2026 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Scenario Analysis · 2026 Full Year</strong><br>Jan–Apr Actuals · May Projected · Jun–Dec Revised High Case · Report: May 26, 2026' },
   trend:    { title: 'DAILY COST <span style="color:var(--accent)">TREND</span>',  meta: '<strong>Jan 1 – May 15, 2026</strong><br>126 data points · Card + On-Site Blended · Report: May 19, 2026' },
 };
 function switchTab(id) {
@@ -702,12 +702,14 @@ function buildTrend() {
   const sW=1200, sH=280, sPadX=52, sPadY=20, sPadB=36;
   const plotW = sW - sPadX*2;
   const plotH = sH - sPadY - sPadB;
-  const maxSpend = Math.max(...trendData.map(d=>d.bs));
+  const maxSpend = Math.max(...trendData.map(d=>d.bs)) * 1.05;
+  // Use 5th percentile as floor to compress low-volume day spikes
+  const bsSorted = [...trendData.map(d=>d.bs)].sort((a,b)=>a-b);
+  const minSpend = bsSorted[Math.floor(bsSorted.length*0.05)] * 0.6;
   const n = trendData.length;
   const xStep = plotW / (n-1);
   const sx = i => sPadX + i * xStep;
-  const sy = v => sPadY + plotH - (v/maxSpend)*plotH;
-
+  const sy = v => sPadY + plotH - ((Math.max(v,minSpend)-minSpend)/(maxSpend-minSpend))*plotH;
   // Month background bands
   let mStart = 0;
   for (let i=1; i<=n; i++) {
@@ -750,7 +752,8 @@ function buildTrend() {
   }
 
   // Y grid lines
-  [0, 10000, 20000, 30000].forEach(v => {
+  const gridVals = [minSpend, minSpend+(maxSpend-minSpend)*0.33, minSpend+(maxSpend-minSpend)*0.66, maxSpend*0.95];
+  gridVals.forEach(v => {
     const y = sy(v);
     const gl = document.createElementNS('http://www.w3.org/2000/svg','line');
     gl.setAttribute('x1',sPadX); gl.setAttribute('x2',sW-sPadX);
@@ -761,7 +764,7 @@ function buildTrend() {
     gt.setAttribute('x',sPadX-4); gt.setAttribute('y',y+3);
     gt.setAttribute('text-anchor','end'); gt.setAttribute('fill','#4b5563');
     gt.setAttribute('font-family','IBM Plex Mono'); gt.setAttribute('font-size','8');
-    gt.textContent = v===0?'$0':'$'+v/1000+'k';
+    gt.textContent = '$'+(v/1000).toFixed(0)+'k';
     sSvg.appendChild(gt);
   });
 
@@ -951,9 +954,9 @@ function buildTrend() {
         <tr style="border-top:1px solid var(--border);">
           <td style="color:var(--text);font-weight:600;">TOTAL</td>
           <td style="color:var(--text);font-weight:600;">—</td>
-          <td id="fcTotalVal" style="color:var(--accent);font-weight:600;">$9,736,049</td>
+          <td id="fcTotalVal" style="color:var(--accent);font-weight:600;">$9,702,685</td>
           <td style="color:var(--muted);font-weight:600;">$7,202,990</td>
-          <td id="fcTotalIncr" style="color:var(--accent2);font-weight:600;">+$2,533,059</td>
+          <td id="fcTotalIncr" style="color:var(--accent2);font-weight:600;">+$2,499,695</td>
           <td></td>
         </tr>
       </tfoot>
@@ -983,9 +986,9 @@ function buildTrend() {
   </div>
   <div class="fc-sc-cell">
     <div class="fc-sc-label">High Case Revised (Full Year)</div>
-    <div class="fc-sc-val" style="color:var(--accent2)">$9,719,060</div>
+    <div class="fc-sc-val" style="color:var(--accent2)">$9,702,685</div>
     <div class="fc-sc-bar" style="background:var(--accent2);width:100%"></div>
-    <div class="fc-sc-sub">+$2,516,070 vs. budget (+34.9%)</div>
+    <div class="fc-sc-sub">+$2,499,695 vs. budget (+34.7%)</div>
   </div>
 </div>
 
