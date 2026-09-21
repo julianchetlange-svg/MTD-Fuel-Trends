@@ -670,27 +670,27 @@ const fcData = [
   { m:'Jul', rate:4.204, blended:778929.90, original:583680.31, incr:195249.59, src:'high', actual:772527, actualCpg:4.540 },
   { m:'Aug', rate:4.369, blended:797444.41, original:578590.82, incr:218853.59, src:'high', actual:825541, actualCpg:4.951 },
   { m:'Sep', rate:5.480, blended:863067.32, original:580672.51, incr:282394.81, src:'mkt', actual:null, projected:994438, projDays:17, projTotal:30, mtdCpg:5.480 },
-  { m:'Oct', rate:5.4717, blended:1068422.34, original:640463.71, incr:427958.63, src:'mkt', actual:null, projected:null },
-  { m:'Nov', rate:5.3372, blended:1042149.66, original:654132.14, incr:388017.52, src:'mkt', actual:null, projected:null },
-  { m:'Dec', rate:5.2026, blended:1015876.98, original:663895.31, incr:351981.67, src:'mkt', actual:null, projected:null },
+  { m:'Oct', rate:5.890, blended:1150100.99, original:640463.71, incr:509637.28, src:'mkt', actual:null, projected:null },
+  { m:'Nov', rate:5.7475, blended:1122275.96, original:654132.14, incr:468143.82, src:'mkt', actual:null, projected:null },
+  { m:'Dec', rate:5.605, blended:1094450.94, original:663895.31, incr:430555.63, src:'mkt', actual:null, projected:null },
 ];
 const origRates = [3.42,3.38,3.32,3.27,3.22,3.18,3.15,3.17,3.20,3.28,3.35,3.40];
 const fcMaxCost = Math.max(...fcData.map(d => Math.max(d.blended, d.original, d.actual||0, d.projected||0)));
 
 // ── 2027 Forecast (market-calibrated, placeholder 2026 volumes) ──
 const gallons2026Basis = [166619.5,166695.4,189658.1,188569.2,181110.6,169441.4,185295.3,182520.8,181460.2,195263.3,195263.3,195263.3];
-const rates2026ForCompare = [3.42,3.38,4.10,4.936,4.877,4.363,4.540,4.951,5.480,5.4717,5.3372,5.2026];
+const rates2026ForCompare = [3.42,3.38,4.10,4.936,4.877,4.363,4.540,4.951,5.480,5.890,5.7475,5.605];
 const fcData2027 = [
-  { m:'Jan', rate:4.9784 }, { m:'Feb', rate:4.7990 }, { m:'Mar', rate:4.6196 }, { m:'Apr', rate:4.4402 },
-  { m:'May', rate:4.3056 }, { m:'Jun', rate:4.1711 }, { m:'Jul', rate:4.0365 }, { m:'Aug', rate:3.9468 },
-  { m:'Sep', rate:3.8571 }, { m:'Oct', rate:3.7674 }, { m:'Nov', rate:3.6777 }, { m:'Dec', rate:3.6329 },
+  { m:'Jan', rate:5.415 }, { m:'Feb', rate:5.225 }, { m:'Mar', rate:5.035 }, { m:'Apr', rate:4.590 },
+  { m:'May', rate:4.455 }, { m:'Jun', rate:4.320 }, { m:'Jul', rate:4.185 }, { m:'Aug', rate:4.095 },
+  { m:'Sep', rate:4.005 }, { m:'Oct', rate:3.915 }, { m:'Nov', rate:3.825 }, { m:'Dec', rate:3.735 },
 ].map((d,i) => ({ ...d, gallons: gallons2026Basis[i], cost: gallons2026Basis[i]*d.rate, rate2026: rates2026ForCompare[i] }));
 const fc2027MaxCost = Math.max(...fcData2027.map(d => d.cost));
 
 const headerTitles = {
   mtd:      { title: 'SEPTEMBER <span style="color:var(--accent)">MTD</span>',      meta: '<strong>September 1 – September 17, 2026</strong><br>15 days of activity · Report: September 18, 2026<div class="source-pills"><span class="pill pill-card">⬛ Fuel Card Transactions</span><span class="pill pill-onsite">⬛ On-Site Dispensing</span></div>' },
   forecast: { title: '2026 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Scenario Analysis · 2026 Full Year</strong><br>Jan–Aug Actuals · Sep MTD Projected · Oct–Dec Market-Revised · Report: September 18, 2026' },
-  forecast2027: { title: '2027 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Market Outlook · 2027 Full Year</strong><br>Aggressive Regional Planning Price · Placeholder Volume · Report: September 18, 2026' },
+  forecast2027: { title: '2027 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Market Outlook · 2027 Full Year</strong><br>Higher Regional Planning Price · Placeholder Volume · Report: September 18, 2026' },
   compare:  { title: 'CARD VS ON-SITE <span style="color:var(--accent)">PRICING</span>', meta: '<strong>Full History · July 1 – Present</strong><br>69 days tracked · Actual On-Site Pricing (Provider Feed) · Report: September 18, 2026' },
 };
 function switchTab(id) {
@@ -935,10 +935,7 @@ function buildForecast() {
 <!-- ── Forecast Tab ── -->
 <div id="tab-forecast" class="tab-content">
 
-<div class="sec-label sy">2026 Fuel Cost Forecast — Market-Revised Oct–Dec · Aggressive Revision, Regional-Adjusted (0.897× Pre-Applied) · Sep 18 Update</div>
-<div style="padding:10px 48px;background:rgba(245,168,0,0.08);border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent2);">
-  ▶ Oct–Dec 2026 updated with a more aggressive planning revision — already regionally adjusted (0.897× applied by the source), used directly with no further calibration. Unlike the prior revision, October's $5.47/gal is consistent with — not a reversal of — our own actual trend (Sep MTD running $5.48/gal and still climbing). Sep remains our own real MTD data, unaffected by this revision.
-</div>
+<div class="sec-label sy">2026 Fuel Cost Forecast — Market-Revised Oct–Dec · Validated Against Regional Street Prices (TX Triangle/Gulf Coast) · Sep 18 Update</div>
 
 <!-- Hero KPIs -->
 <div class="fc-hero">
@@ -949,12 +946,12 @@ function buildForecast() {
   </div>
   <div class="fc-hero-cell fc-hc-blend">
     <div class="fc-hero-label">Updated Full Year Est.</div>
-    <div class="fc-hero-val" style="color:var(--accent)">$10,015,914</div>
+    <div class="fc-hero-val" style="color:var(--accent)">$10,256,293</div>
     <div class="fc-hero-sub">Jan–Aug Actuals + Sep Proj + Oct–Dec Market-Revised</div>
   </div>
   <div class="fc-hero-cell fc-hc-incr">
     <div class="fc-hero-label">Incremental Over Budget</div>
-    <div class="fc-hero-val" style="color:var(--accent2)">+$2,812,924</div>
+    <div class="fc-hero-val" style="color:var(--accent2)">+$3,053,303</div>
     <div class="fc-hero-sub">Jan–Aug actuals + Sep proj + Oct–Dec revised vs. budget</div>
   </div>
   <div class="fc-hero-cell fc-hc-pct">
@@ -1003,9 +1000,9 @@ function buildForecast() {
         <tr style="border-top:1px solid var(--border);">
           <td style="color:var(--text);font-weight:600;">TOTAL</td>
           <td style="color:var(--text);font-weight:600;">—</td>
-          <td id="fcTotalVal" style="color:var(--accent);font-weight:600;">$10,015,914</td>
+          <td id="fcTotalVal" style="color:var(--accent);font-weight:600;">$10,256,293</td>
           <td style="color:var(--muted);font-weight:600;">$7,202,990</td>
-          <td id="fcTotalIncr" style="color:var(--accent2);font-weight:600;">+$2,812,924</td>
+          <td id="fcTotalIncr" style="color:var(--accent2);font-weight:600;">+$3,053,303</td>
           <td></td>
         </tr>
       </tfoot>
@@ -1029,9 +1026,9 @@ function buildForecast() {
   </div>
   <div class="fc-sc-cell">
     <div class="fc-sc-label">Market-Revised (Full Year)</div>
-    <div class="fc-sc-val" style="color:var(--accent2)">$10,015,914</div>
+    <div class="fc-sc-val" style="color:var(--accent2)">$10,256,293</div>
     <div class="fc-sc-bar" style="background:var(--accent2);width:100%"></div>
-    <div class="fc-sc-sub">+$2,812,924 vs. budget (+39.1%)</div>
+    <div class="fc-sc-sub">+$3,053,303 vs. budget (+42.4%)</div>
   </div>
 </div>
 
@@ -1039,32 +1036,32 @@ function buildForecast() {
 
 <div id="tab-forecast2027" class="tab-content">
 
-<div class="sec-label sy">2027 Fuel Cost Forecast — Aggressive Market Outlook · Regional-Adjusted (0.897× Pre-Applied)</div>
+<div class="sec-label sy">2027 Fuel Cost Forecast — Higher Market Outlook · Regional-Adjusted (0.897× Pre-Applied)</div>
 <div style="padding:10px 48px;background:rgba(74,184,245,0.08);border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue);">
-  ▶ Assumptions: (1) Rates reflect a more aggressive planning revision, already regionally adjusted (Texas/Oklahoma/New Mexico) — used directly with no further calibration. (2) Volumes are a placeholder equal to each corresponding 2026 month's budgeted gallons (no separate 2027 volume budget exists yet) — replace once real 2027 volume estimates are available. (3) No "actual" data exists for 2027; every month below is forecast.
+  ▶ Assumptions: (1) Rates reflect a higher planning revision, already regionally adjusted (Texas/Oklahoma/New Mexico) — used directly with no further calibration. (2) Volumes are a placeholder equal to each corresponding 2026 month's budgeted gallons (no separate 2027 volume budget exists yet) — replace once real 2027 volume estimates are available. (3) No "actual" data exists for 2027; every month below is forecast.
 </div>
 
 <!-- Hero KPIs -->
 <div class="fc-hero">
   <div class="fc-hero-cell fc-hc-orig">
     <div class="fc-hero-label">2027 Forecast Total</div>
-    <div class="fc-hero-val" style="color:var(--accent)">$9,160,747</div>
-    <div class="fc-hero-sub">aggressive revision · placeholder volume</div>
+    <div class="fc-hero-val" style="color:var(--accent)">$9,622,802</div>
+    <div class="fc-hero-sub">higher revision · placeholder volume</div>
   </div>
   <div class="fc-hero-cell fc-hc-blend">
     <div class="fc-hero-label">vs. 2026 Revised Estimate</div>
-    <div class="fc-hero-val" style="color:var(--green)">-$855,167</div>
-    <div class="fc-hero-sub">-8.5% · prices expected to ease through 2027</div>
+    <div class="fc-hero-val" style="color:var(--green)">-$633,491</div>
+    <div class="fc-hero-sub">-6.2% · only modest easing expected into 2027</div>
   </div>
   <div class="fc-hero-cell fc-hc-incr">
     <div class="fc-hero-label">vs. 2026 Original Budget</div>
-    <div class="fc-hero-val" style="color:var(--accent2)">+$1,957,757</div>
-    <div class="fc-hero-sub">+27.2% · still well above pre-conflict baseline</div>
+    <div class="fc-hero-val" style="color:var(--accent2)">+$2,419,812</div>
+    <div class="fc-hero-sub">+33.6% · well above pre-conflict baseline</div>
   </div>
   <div class="fc-hero-cell fc-hc-pct">
     <div class="fc-hero-label">Avg Rate (2027)</div>
-    <div class="fc-hero-val" style="color:var(--text)">$4.17</div>
-    <div class="fc-hero-sub">H1 $4.55/gal · H2 $3.82/gal</div>
+    <div class="fc-hero-val" style="color:var(--text)">$4.38</div>
+    <div class="fc-hero-sub">H1 $4.83/gal · H2 $3.96/gal</div>
   </div>
 </div>
 
@@ -1102,10 +1099,10 @@ function buildForecast() {
       <tfoot>
         <tr style="border-top:1px solid var(--border);">
           <td style="color:var(--text);font-weight:600;">TOTAL</td>
-          <td style="color:var(--text);font-weight:600;">$4.17</td>
+          <td style="color:var(--text);font-weight:600;">$4.38</td>
           <td style="color:var(--muted);font-weight:600;">2,197,160</td>
-          <td id="fcTotalVal2027" style="color:var(--accent);font-weight:600;">$9,160,747</td>
-          <td style="color:var(--green);font-weight:600;">-$855,167</td>
+          <td id="fcTotalVal2027" style="color:var(--accent);font-weight:600;">$9,622,802</td>
+          <td style="color:var(--green);font-weight:600;">-$633,491</td>
         </tr>
       </tfoot>
     </table>
@@ -1116,15 +1113,15 @@ function buildForecast() {
 <div class="fc-scenarios" style="grid-template-columns:repeat(2,1fr);">
   <div class="fc-sc-cell">
     <div class="fc-sc-label">H1 2027 (Jan–Jun)</div>
-    <div class="fc-sc-val" style="color:var(--accent2)">$4,829,402</div>
+    <div class="fc-sc-val" style="color:var(--accent2)">$5,132,524</div>
     <div class="fc-sc-bar" style="background:var(--accent2);width:100%"></div>
-    <div class="fc-sc-sub">Avg $4.55/gal · still elevated, inventory rebuild ongoing</div>
+    <div class="fc-sc-sub">Avg $4.83/gal · still elevated, inventory rebuild ongoing</div>
   </div>
   <div class="fc-sc-cell">
     <div class="fc-sc-label">H2 2027 (Jul–Dec)</div>
-    <div class="fc-sc-val" style="color:var(--green)">$4,331,345</div>
-    <div class="fc-sc-bar" style="background:var(--green);width:90%"></div>
-    <div class="fc-sc-sub">Avg $3.82/gal · normalization per updated outlook</div>
+    <div class="fc-sc-val" style="color:var(--green)">$4,490,278</div>
+    <div class="fc-sc-bar" style="background:var(--green);width:87%"></div>
+    <div class="fc-sc-sub">Avg $3.96/gal · normalization per updated outlook</div>
   </div>
 </div>
 
