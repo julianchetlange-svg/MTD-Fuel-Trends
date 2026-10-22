@@ -220,6 +220,23 @@
   .hd-ctl input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
   .hd-ctl select { width: 100%; background: var(--card); color: var(--text); border: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 6px; }
   .hd-ctl .hd-hint { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .hd-help-btn { float: right; margin-left: 16px; background: var(--accent); color: #0d5540; border: none; border-radius: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 12px; cursor: pointer; }
+  .hd-help-btn:hover { background: var(--accent2); }
+  .hd-modal { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.65); overflow-y: auto; padding: 40px 16px; }
+  .hd-modal.open { display: block; }
+  .hd-sheet { max-width: 860px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-top: 3px solid var(--accent); padding: 28px 36px 32px; position: relative; }
+  .hd-sheet h2 { font-size: 20px; color: var(--accent); margin-bottom: 4px; }
+  .hd-sheet .hd-sub { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); margin-bottom: 18px; letter-spacing: 0.06em; }
+  .hd-sheet h3 { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 18px 0 6px; }
+  .hd-sheet p, .hd-sheet li { font-size: 13px; line-height: 1.6; color: var(--text); font-weight: 300; }
+  .hd-sheet ul { padding-left: 18px; }
+  .hd-sheet table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .hd-sheet th, .hd-sheet td { text-align: left; padding: 6px 8px 6px 0; border-bottom: 1px solid rgba(29,122,92,0.5); font-size: 12px; vertical-align: top; color: var(--text); font-weight: 300; }
+  .hd-sheet th { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+  .hd-sheet td:first-child { color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .hd-close { position: absolute; top: 10px; right: 14px; background: none; border: none; color: var(--muted); font-size: 24px; cursor: pointer; line-height: 1; }
+  .hd-print { margin-top: 16px; background: none; border: 1px solid var(--border); color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 6px 12px; cursor: pointer; }
+  @media print { body.hd-printing > *:not(#hdModal) { display: none !important; } body.hd-printing #hdModal { position: static; background: none; padding: 0; } body.hd-printing .hd-sheet { border: none; background: #fff; max-width: none; } body.hd-printing .hd-sheet * { color: #000 !important; } body.hd-printing .hd-close, body.hd-printing .hd-print { display: none; } }
   .hd-note { padding: 10px 48px; background: rgba(255,233,1,0.06); border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--accent); line-height: 1.6; }
   .hd-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
   .hd-table th { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 0 0 9px 8px; border-bottom: 1px solid var(--border); font-weight: 400; }
@@ -993,6 +1010,11 @@ function buildHedge() {
   const q = id => document.getElementById(id);
   if (!hdBound) {
     ['hdHorizon','hdRatio','hdCapOff','hdFloorOff','hdSwapOff','hdEff'].forEach(id => q(id).addEventListener('input', buildHedge));
+    const hm = q('hdModal'), hOpen = () => { hm.classList.add('open'); document.body.style.overflow = 'hidden'; }, hShut = () => { hm.classList.remove('open'); document.body.style.overflow = ''; };
+    q('hdHelpBtn').addEventListener('click', hOpen); q('hdClose').addEventListener('click', hShut);
+    hm.addEventListener('click', e => { if (e.target === hm) hShut(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') hShut(); });
+    q('hdPrint').addEventListener('click', () => { document.body.classList.add('hd-printing'); window.print(); document.body.classList.remove('hd-printing'); });
     hdBound = true;
   }
   const ratio = +q('hdRatio').value / 100, capOff = +q('hdCapOff').value / 100, floorOff = +q('hdFloorOff').value / 100;
@@ -1345,7 +1367,7 @@ function buildHedge() {
 <div id="tab-hedge" class="tab-content">
 
 <div class="sec-label sy">Fuel at Risk — Hedge Sensitivity · Payoff of Swap / Collar / Cap on Unhedged Months · Option Pricing Not Modeled</div>
-<div class="hd-note">▶ Scenario tool, not a trade recommendation. Volumes are budgeted gallons (placeholder, not firm commitments). Rates come from the Forecast tabs. Payoffs show what each hedge would pay or cost at a given price move; actual cap/floor strikes and any premium must come from dealer quotes. Hedge only the portion of volume you are confident you will burn.</div>
+<div class="hd-note"><button class="hd-help-btn" id="hdHelpBtn" type="button">How does this work?</button>▶ Scenario tool, not a trade recommendation. Volumes are budgeted gallons (placeholder, not firm commitments). Rates come from the Forecast tabs. Payoffs show what each hedge would pay or cost at a given price move; actual cap/floor strikes and any premium must come from dealer quotes. Hedge only the portion of volume you are confident you will burn.</div>
 
 <div class="fc-hero">
   <div class="fc-hero-cell fc-hc-orig">
@@ -1383,7 +1405,7 @@ function buildHedge() {
   <div class="hd-ctl">
     <label>Hedge ratio <b id="hdRatioV">50%</b></label>
     <input type="range" id="hdRatio" min="0" max="100" step="5" value="50">
-    <div class="hd-hint">Layer in 30–60%, not 100%</div>
+    <div class="hd-hint">Illustrative only — set the real ratio in a written policy (public programs cap near 95% of near-term use, less further out)</div>
   </div>
   <div class="hd-ctl">
     <label>Cap above forecast <b id="hdCapV">+$0.50</b></label>
@@ -1445,9 +1467,49 @@ function buildHedge() {
 
 <div class="hd-factors">
   <div class="hd-factor"><h4>Basis risk</h4><p>You pay regional rack plus card and Suncoast pricing, not a national futures price. The hedge only pays on its benchmark, so use the Basis Tracking slider to see how imperfect tracking erodes protection. Fuel type (diesel vs. gasoline) decides the benchmark.</p></div>
-  <div class="hd-factor"><h4>Size and layer</h4><p>Hedge a fraction of expected gallons, added in layers over 3–6 months. Hedging gallons you never burn turns the hedge into speculation. 2027 volumes here are only 2026 budgets, so firm up volumes before hedging that far out.</p></div>
+  <div class="hd-factor"><h4>Size and layer</h4><p>Hedge a fraction of expected gallons, added in several smaller trades over time rather than all at once (public programs use many small transactions). Hedging gallons you never burn turns the hedge into speculation. 2027 volumes here are only 2026 budgets, so firm up volumes before hedging that far out.</p></div>
   <div class="hd-factor"><h4>Forward curve vs. your view</h4><p>After a price spike the forward curve usually slopes down. If your forecast is below the forward price, a swap locks in more than you expect to pay. A collar with the cap at your pain point and the floor near your forecast fits better. Check dealer quotes first.</p></div>
   <div class="hd-factor"><h4>Credit, collateral, accounting</h4><p>Swaps need a credit line or ISDA; futures need margin and can trigger cash calls when prices fall. Hedge accounting (ASC 815) may not qualify if basis is loose, so P&amp;L can swing. Set a board-approved policy with limits and no speculation. A fixed or capped program from Suncoast may be simpler for on-site gallons.</p></div>
+</div>
+
+
+<div class="hd-modal" id="hdModal" role="dialog" aria-modal="true" aria-label="How the Fuel at Risk tab works">
+  <div class="hd-sheet">
+    <button class="hd-close" id="hdClose" type="button" aria-label="Close">×</button>
+    <h2>Fuel at Risk — How It Works</h2>
+    <div class="hd-sub">ONE-PAGE GUIDE · SCENARIO TOOL, NOT A TRADE RECOMMENDATION</div>
+    <h3>The question it answers</h3>
+    <p>If fuel prices move up or down by some amount from our forecast, how much more or less would we pay for the gallons we have not yet bought (Nov 2026 – Dec 2027), and how much of that swing could a hedge absorb?</p>
+    <h3>How to read it</h3>
+    <ul>
+      <li><b>Top cards:</b> gallons exposed, forecast cost with no hedge, the cost of a $0.10/gal move across the horizon, and what a collar would do in a +$1.00 spike.</li>
+      <li><b>Sliders:</b> change the hedge size and terms. Everything recalculates instantly.</li>
+      <li><b>Chart and grid:</b> total cost at each price move for no hedge, swap, collar and cap. A flatter line means more protection.</li>
+      <li><b>Exposure by month:</b> forecast gallons, rate and cost, and how many gallons the chosen ratio would cover.</li>
+    </ul>
+    <h3>The hedges in plain terms</h3>
+    <table>
+      <tr><th>Tool</th><th>What it does</th><th>Trade-off</th></tr>
+      <tr><td>Swap</td><td>Fixes the price on the hedged gallons. The dealer pays us when the market is above the fixed price and we pay when below.</td><td>Full protection, but no benefit if prices fall.</td></tr>
+      <tr><td>Cap</td><td>Pays us when the market goes above the cap price. We keep the benefit if prices fall.</td><td>Costs an upfront premium (not modeled here).</td></tr>
+      <tr><td>Collar</td><td>Buy a cap and sell a floor. Prices can move inside the band; outside it the hedge takes over. Often structured to cost little or nothing upfront.</td><td>Protects against spikes but gives up gains below the floor.</td></tr>
+    </table>
+    <h3>The sliders</h3>
+    <ul>
+      <li><b>Hedge ratio:</b> share of gallons hedged. The default is illustrative. A real ratio comes from a written policy. One public program caps hedging at 95% of forecast use for the next 12 months and 80% for months 13–24.</li>
+      <li><b>Cap / floor / swap price:</b> distance from our forecast rate. Real levels come from dealer quotes.</li>
+      <li><b>Basis tracking:</b> how closely the hedge benchmark (e.g., NYMEX ULSD) follows the price we actually pay. Below 100%, the hedge protects less than it appears to.</li>
+    </ul>
+    <h3>What it does not include</h3>
+    <ul>
+      <li>Option premiums, dealer spreads and fees. Quotes will change the collar and cap results.</li>
+      <li>2027 volumes are 2026 budgets used as a placeholder, not firm commitments.</li>
+      <li>Credit lines, margin calls and hedge accounting (ASC 815), which should be reviewed with finance and the dealer.</li>
+    </ul>
+    <h3>Remember</h3>
+    <p>Hedging reduces the swing in cost; it does not lower the average cost. A hedge can lose money when prices fall. Hedge only gallons we are confident we will burn.</p>
+    <button class="hd-print" id="hdPrint" type="button">Print this page</button>
+  </div>
 </div>
 
 <footer class="footer">
