@@ -210,6 +210,29 @@
   .fc-sc-val   { font-family: 'Bebas Neue', sans-serif; font-size: 26px; line-height: 1.1; }
   .fc-sc-sub   { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); margin-top: 3px; }
   .fc-sc-bar   { height: 3px; border-radius: 2px; margin-top: 6px; }
+
+  /* ── Fuel at Risk (hedge) Tab ── */
+  .hd-controls { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.12); }
+  .hd-ctl { padding: 16px 24px; border-right: 1px solid var(--border); }
+  .hd-ctl:last-child { border-right: none; }
+  .hd-ctl label { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .hd-ctl label b { color: var(--accent); font-weight: 600; letter-spacing: 0.04em; }
+  .hd-ctl input[type=range] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+  .hd-ctl select { width: 100%; background: var(--card); color: var(--text); border: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 5px 6px; }
+  .hd-ctl .hd-hint { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .hd-note { padding: 10px 48px; background: rgba(255,233,1,0.06); border-bottom: 1px solid var(--border); font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--accent); line-height: 1.6; }
+  .hd-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+  .hd-table th { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 0 0 9px 8px; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .hd-table th:first-child { text-align: left; padding-left: 0; }
+  .hd-table td { padding: 7px 0 7px 8px; text-align: right; border-bottom: 1px solid rgba(29,122,92,0.4); font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text); }
+  .hd-table td:first-child { text-align: left; padding-left: 0; color: var(--muted); font-weight: 600; }
+  .hd-table tr.hd-base td { background: rgba(255,233,1,0.07); }
+  .hd-pos { color: var(--green); } .hd-neg { color: var(--accent2); }
+  .hd-factors { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); }
+  .hd-factor { padding: 20px 28px; border-right: 1px solid var(--border); }
+  .hd-factor:last-child { border-right: none; }
+  .hd-factor h4 { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+  .hd-factor p { font-size: 12px; line-height: 1.6; color: var(--text); font-weight: 300; }
 </style>
 </head>
 <body>
@@ -241,6 +264,7 @@
   <button class="tab-btn" onclick="switchTab('forecast')">2026 Fuel Forecast</button>
   <button class="tab-btn" onclick="switchTab('forecast2027')">2027 Fuel Forecast</button>
   <button class="tab-btn" onclick="switchTab('compare')">Card vs On-Site Pricing</button>
+  <button class="tab-btn" onclick="switchTab('hedge')">Fuel at Risk (Hedge)</button>
 </nav>
 
 <div id="tab-mtd" class="tab-content active">
@@ -727,6 +751,7 @@ const headerTitles = {
   forecast: { title: '2026 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Scenario Analysis · 2026 Full Year</strong><br>Jan–Sep Actuals · Oct MTD Projected · Nov–Dec Market View −4% · Report: October 19, 2026' },
   forecast2027: { title: '2027 FUEL <span style="color:var(--accent)">FORECAST</span>', meta: '<strong>Market Outlook · 2027 Full Year</strong><br>Higher Regional Planning Price (Jan–Mar −4%) · Placeholder Volume · Report: October 19, 2026' },
   compare:  { title: 'CARD VS ON-SITE <span style="color:var(--accent)">PRICING</span>', meta: '<strong>Full History · July 1 – Present</strong><br>96 days tracked · Actual On-Site Pricing (Provider Feed) · Report: October 19, 2026' },
+  hedge:    { title: 'FUEL AT <span style="color:var(--accent)">RISK</span>', meta: '<strong>Hedge Sensitivity · Nov 2026 – Dec 2027</strong><br>Swap / Collar / Cap Payoff Scenarios · Budgeted Gallons (Placeholder) · Report: October 19, 2026' },
 };
 function switchTab(id) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -738,6 +763,7 @@ function switchTab(id) {
   if (id === 'forecast') buildForecast();
   if (id === 'forecast2027') buildForecast2027();
   if (id === 'compare') buildCompare();
+  if (id === 'hedge') buildHedge();
 }
 
 function buildForecast2027() {
@@ -961,7 +987,90 @@ function buildForecast() {
   if (el2) el2.textContent = (incrTotal>=0?'+$':'-$') + Math.round(Math.abs(incrTotal)).toLocaleString();
 }
 
+// ── Fuel at Risk (hedge sensitivity). Built lazily; derives everything from fcData / fcData2027 / gallons2026Basis. ──
+let hdBound = false;
+function buildHedge() {
+  const q = id => document.getElementById(id);
+  if (!hdBound) {
+    ['hdHorizon','hdRatio','hdCapOff','hdFloorOff','hdSwapOff','hdEff'].forEach(id => q(id).addEventListener('input', buildHedge));
+    hdBound = true;
+  }
+  const ratio = +q('hdRatio').value / 100, capOff = +q('hdCapOff').value / 100, floorOff = +q('hdFloorOff').value / 100;
+  const swapOff = +q('hdSwapOff').value / 100, eff = +q('hdEff').value / 100, horizon = q('hdHorizon').value;
+  const sgn = (v, d=2) => (v >= 0 ? '+' : '−') + '$' + Math.abs(v).toFixed(d);
+  q('hdRatioV').textContent = Math.round(ratio*100) + '%'; q('hdCapV').textContent = sgn(capOff);
+  q('hdFloorV').textContent = '−$' + floorOff.toFixed(2); q('hdSwapV').textContent = sgn(swapOff); q('hdEffV').textContent = Math.round(eff*100) + '%';
 
+  // Monthly exposure: Nov–Dec 2026 from the 2026 forecast, then all of 2027 (budgeted gallons, placeholder volume)
+  let months = [];
+  ['Nov','Dec'].forEach(mn => {
+    const i = fcData.findIndex(d => d.m === mn);
+    months.push({ label: mn + ' 2026', yr: 2026, g: gallons2026Basis[i], r: fcData[i].rate });
+  });
+  fcData2027.forEach(d => months.push({ label: d.m + ' 2027', yr: 2027, g: d.gallons, r: d.rate }));
+  if (horizon === '2026') months = months.filter(m => m.yr === 2026);
+  if (horizon === '2027') months = months.filter(m => m.yr === 2027);
+
+  const cost = s => {
+    let unh = 0, swap = 0, collar = 0, cap = 0;
+    months.forEach(m => {
+      const p = m.r + s, b = m.r + eff * s, h = ratio * m.g;
+      const C = m.r + capOff, F = m.r - floorOff, S = m.r + swapOff;
+      const base = m.g * p, capPay = Math.max(b - C, 0), floorPay = Math.max(F - b, 0);
+      unh += base; swap += base - h * (b - S); collar += base - h * (capPay - floorPay); cap += base - h * capPay;
+    });
+    return { unh, swap, collar, cap };
+  };
+  const fm = n => '$' + Math.round(n).toLocaleString();
+  const fd = n => (n >= 0 ? '+' : '−') + '$' + Math.round(Math.abs(n)).toLocaleString();
+
+  const totG = months.reduce((a, m) => a + m.g, 0), base = cost(0), up = cost(1), dn = cost(-1);
+  q('hdH1').textContent = Math.round(totG).toLocaleString();
+  q('hdH1s').textContent = months.length + ' months · budgeted gallons (placeholder)';
+  q('hdH2').textContent = fm(base.unh);
+  q('hdH2s').textContent = 'avg $' + (base.unh / totG).toFixed(2) + '/gal at current forecast rates';
+  q('hdH3').textContent = '±' + fm(totG * 0.10);
+  q('hdH4').textContent = fd(up.collar - up.unh);
+  q('hdH4').style.color = (up.collar - up.unh) <= 0 ? 'var(--green)' : 'var(--accent2)';
+  q('hdH4s').textContent = 'vs. unhedged · at −$1.00: ' + fd(dn.collar - dn.unh) + ' (' + Math.round(ratio*100) + '% hedged)';
+
+  // Exposure table
+  q('hdExpBody').innerHTML = months.map(m =>
+    `<tr><td>${m.label}</td><td>${Math.round(m.g).toLocaleString()}</td><td>$${m.r.toFixed(2)}</td><td style="color:var(--accent);font-weight:600">${fm(m.g * m.r)}</td><td style="color:var(--blue)">${Math.round(m.g * ratio).toLocaleString()}</td></tr>`).join('');
+  q('hdTotG').textContent = Math.round(totG).toLocaleString();
+  q('hdTotR').textContent = '$' + (base.unh / totG).toFixed(2);
+  q('hdTotC').textContent = fm(base.unh);
+  q('hdTotH').textContent = Math.round(totG * ratio).toLocaleString();
+  q('hdFootG').textContent = Math.round(totG).toLocaleString();
+  q('hdFootR').textContent = Math.round(ratio*100) + '%';
+
+  // Scenario grid
+  q('hdGrid').innerHTML = [-1, -0.5, -0.25, 0, 0.25, 0.5, 1].map(s => {
+    const c = cost(s), d = c.collar - c.unh;
+    return `<tr class="${s === 0 ? 'hd-base' : ''}"><td>${s === 0 ? 'Base' : sgn(s)}</td><td>${fm(c.unh)}</td><td style="color:var(--blue)">${fm(c.swap)}</td><td style="color:var(--accent);font-weight:600">${fm(c.collar)}</td><td style="color:var(--green)">${fm(c.cap)}</td><td class="${d <= 0 ? 'hd-pos' : 'hd-neg'}">${d === 0 ? '$0' : fd(d)}</td></tr>`;
+  }).join('');
+
+  // Chart: total cost vs move
+  const svg = q('hdChart'); svg.innerHTML = '';
+  const NS = 'http://www.w3.org/2000/svg', padL = 58, padR = 14, padT = 12, padB = 28, W = 680, H = 210;
+  const pts = []; for (let i = -20; i <= 20; i++) pts.push(i * 0.05);
+  const series = pts.map(s => ({ s, ...cost(s) }));
+  const all = series.flatMap(d => [d.unh, d.swap, d.collar, d.cap]);
+  const yMin = Math.min(...all), yMax = Math.max(...all), yPad = (yMax - yMin) * 0.06 || 1;
+  const x = s => padL + (s + 1) / 2 * (W - padL - padR);
+  const y = v => padT + (1 - (v - (yMin - yPad)) / ((yMax + yPad) - (yMin - yPad))) * (H - padT - padB);
+  const add = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v)); if (text !== undefined) e.textContent = text; svg.appendChild(e); return e; };
+  [yMin, (yMin + yMax) / 2, yMax].forEach(v => {
+    add('line', { x1: padL, x2: W - padR, y1: y(v), y2: y(v), stroke: '#1d7a5c', 'stroke-width': 1 });
+    add('text', { x: padL - 6, y: y(v) + 3, fill: '#b4d9ca', 'font-family': 'IBM Plex Mono', 'font-size': 8, 'text-anchor': 'end' }, '$' + (v / 1e6).toFixed(2) + 'M');
+  });
+  [-1, -0.5, 0, 0.5, 1].forEach(s => {
+    add('text', { x: x(s), y: H - 8, fill: '#b4d9ca', 'font-family': 'IBM Plex Mono', 'font-size': 8, 'text-anchor': 'middle' }, s === 0 ? 'forecast' : sgn(s));
+  });
+  add('line', { x1: x(0), x2: x(0), y1: padT, y2: H - padB, stroke: '#b4d9ca', 'stroke-width': 1, 'stroke-dasharray': '3 3', opacity: 0.6 });
+  const line = (key, color, w, dash) => add('polyline', { points: series.map(d => x(d.s) + ',' + y(d[key])).join(' '), fill: 'none', stroke: color, 'stroke-width': w, 'stroke-dasharray': dash || '' });
+  line('unh', '#f4faf6', 1.5, '4 3'); line('cap', '#86e39a', 1.5); line('swap', '#6cc8f7', 1.5); line('collar', '#ffe901', 2.5);
+}
 
 </script>
 
@@ -1232,6 +1341,125 @@ function buildForecast() {
 </footer>
 
 </div><!-- end tab-compare -->
+
+<div id="tab-hedge" class="tab-content">
+
+<div class="sec-label sy">Fuel at Risk — Hedge Sensitivity · Payoff of Swap / Collar / Cap on Unhedged Months · Option Pricing Not Modeled</div>
+<div class="hd-note">▶ Scenario tool, not a trade recommendation. Volumes are budgeted gallons (placeholder, not firm commitments). Rates come from the Forecast tabs. Payoffs show what each hedge would pay or cost at a given price move; actual cap/floor strikes and any premium must come from dealer quotes. Hedge only the portion of volume you are confident you will burn.</div>
+
+<div class="fc-hero">
+  <div class="fc-hero-cell fc-hc-orig">
+    <div class="fc-hero-label">Gallons Exposed</div>
+    <div class="fc-hero-val" style="color:var(--text)" id="hdH1">—</div>
+    <div class="fc-hero-sub" id="hdH1s">budgeted gallons in horizon</div>
+  </div>
+  <div class="fc-hero-cell fc-hc-blend">
+    <div class="fc-hero-label">Forecast Cost (Unhedged)</div>
+    <div class="fc-hero-val" style="color:var(--accent)" id="hdH2">—</div>
+    <div class="fc-hero-sub" id="hdH2s">at current forecast rates</div>
+  </div>
+  <div class="fc-hero-cell fc-hc-incr">
+    <div class="fc-hero-label">Cost of a $0.10/gal Move</div>
+    <div class="fc-hero-val" style="color:var(--accent2)" id="hdH3">—</div>
+    <div class="fc-hero-sub" id="hdH3s">across the whole horizon, unhedged</div>
+  </div>
+  <div class="fc-hero-cell fc-hc-pct">
+    <div class="fc-hero-label">Collar at +$1.00/gal</div>
+    <div class="fc-hero-val" style="color:var(--green)" id="hdH4">—</div>
+    <div class="fc-hero-sub" id="hdH4s">vs. unhedged</div>
+  </div>
+</div>
+
+<div class="hd-controls">
+  <div class="hd-ctl">
+    <label>Horizon</label>
+    <select id="hdHorizon">
+      <option value="all">Nov 2026 – Dec 2027</option>
+      <option value="2026">Nov – Dec 2026 only</option>
+      <option value="2027">2027 only</option>
+    </select>
+    <div class="hd-hint">Oct 2026 is excluded (in progress)</div>
+  </div>
+  <div class="hd-ctl">
+    <label>Hedge ratio <b id="hdRatioV">50%</b></label>
+    <input type="range" id="hdRatio" min="0" max="100" step="5" value="50">
+    <div class="hd-hint">Layer in 30–60%, not 100%</div>
+  </div>
+  <div class="hd-ctl">
+    <label>Cap above forecast <b id="hdCapV">+$0.50</b></label>
+    <input type="range" id="hdCapOff" min="0" max="150" step="5" value="50">
+    <div class="hd-hint">Set at your budget pain point</div>
+  </div>
+  <div class="hd-ctl">
+    <label>Floor below forecast <b id="hdFloorV">−$0.50</b></label>
+    <input type="range" id="hdFloorOff" min="0" max="150" step="5" value="50">
+    <div class="hd-hint">Price you would be happy to pay</div>
+  </div>
+  <div class="hd-ctl">
+    <label>Swap price vs forecast <b id="hdSwapV">+$0.00</b></label>
+    <input type="range" id="hdSwapOff" min="-100" max="100" step="5" value="0">
+    <div class="hd-hint">Fixed price the swap locks in</div>
+  </div>
+  <div class="hd-ctl">
+    <label>Basis tracking <b id="hdEffV">90%</b></label>
+    <input type="range" id="hdEff" min="50" max="100" step="5" value="90">
+    <div class="hd-hint">Share of your price move the hedge benchmark mirrors</div>
+  </div>
+</div>
+
+<div class="fc-body">
+  <div class="fc-chart-panel">
+    <div class="pt">Total Cost in Horizon vs. Price Move — Unhedged vs. Hedged</div>
+    <svg style="width:100%;height:210px;overflow:visible;" id="hdChart" viewBox="0 0 680 210"></svg>
+    <div class="chart-legend" style="margin-bottom:4px;flex-wrap:wrap;">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--text)"></div>Unhedged</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--blue)"></div>Swap</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--accent)"></div>Collar</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Cap (before premium)</div>
+    </div>
+    <div class="fc-rate-wrap">
+      <div class="pt">Scenario Grid — Parallel Move in Delivered $/Gal</div>
+      <table class="hd-table">
+        <thead><tr><th>Move</th><th>Unhedged</th><th>Swap</th><th>Collar</th><th>Cap*</th><th>Collar vs. Unhedged</th></tr></thead>
+        <tbody id="hdGrid"></tbody>
+      </table>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-top:8px;line-height:1.6;">*Cap shown before premium; the premium is a real cost that must be added once quoted. Swap and collar are shown before any dealer spread or fees.</div>
+    </div>
+  </div>
+
+  <div class="fc-right">
+    <div class="pt">Exposure by Month</div>
+    <table class="fc-table">
+      <thead><tr><th>Month</th><th>Gallons</th><th>Rate</th><th>Fcst Cost</th><th>Hedged Gal</th></tr></thead>
+      <tbody id="hdExpBody"></tbody>
+      <tfoot><tr style="border-top:1px solid var(--border);">
+        <td style="color:var(--text);font-weight:600;">TOTAL</td>
+        <td id="hdTotG" style="color:var(--text);font-weight:600;">—</td>
+        <td id="hdTotR" style="color:var(--text);font-weight:600;">—</td>
+        <td id="hdTotC" style="color:var(--accent);font-weight:600;">—</td>
+        <td id="hdTotH" style="color:var(--blue);font-weight:600;">—</td>
+      </tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<div class="hd-factors">
+  <div class="hd-factor"><h4>Basis risk</h4><p>You pay regional rack plus card and Suncoast pricing, not a national futures price. The hedge only pays on its benchmark, so use the Basis Tracking slider to see how imperfect tracking erodes protection. Fuel type (diesel vs. gasoline) decides the benchmark.</p></div>
+  <div class="hd-factor"><h4>Size and layer</h4><p>Hedge a fraction of expected gallons, added in layers over 3–6 months. Hedging gallons you never burn turns the hedge into speculation. 2027 volumes here are only 2026 budgets, so firm up volumes before hedging that far out.</p></div>
+  <div class="hd-factor"><h4>Forward curve vs. your view</h4><p>After a price spike the forward curve usually slopes down. If your forecast is below the forward price, a swap locks in more than you expect to pay. A collar with the cap at your pain point and the floor near your forecast fits better. Check dealer quotes first.</p></div>
+  <div class="hd-factor"><h4>Credit, collateral, accounting</h4><p>Swaps need a credit line or ISDA; futures need margin and can trigger cash calls when prices fall. Hedge accounting (ASC 815) may not qualify if basis is loose, so P&amp;L can swing. Set a board-approved policy with limits and no speculation. A fixed or capped program from Suncoast may be simpler for on-site gallons.</p></div>
+</div>
+
+<footer class="footer">
+  <div class="footer-left">McCOY'S FUEL ACTIVITY REPORT · FUEL AT RISK · HEDGE SENSITIVITY</div>
+  <div class="footer-right">
+    Horizon Gallons: <span id="hdFootG">—</span>
+    &nbsp;·&nbsp; Hedge Ratio: <span id="hdFootR">—</span>
+    &nbsp;·&nbsp; Option pricing: <span>not modeled</span>
+  </div>
+</footer>
+
+</div><!-- end tab-hedge -->
 
 
 
